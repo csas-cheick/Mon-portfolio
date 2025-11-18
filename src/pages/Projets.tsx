@@ -54,6 +54,19 @@ const PROJECTS_DATA: Project[] = [
     category: "Full Stack & IA",
   },
   {
+    title: "Capital Analysis",
+    description: "Site web corporatif pour entreprise Capital Analysis.",
+    longDescription:
+      "Un site vitrine professionnel présentant les services, activités et engagements de l'entreprise Capital Analysis. Développé avec une architecture moderne, une interface responsive et une mise en avant soignée du contenu pour renforcer l'identité numérique de l'entreprise.",
+    image: "/images/screenshots/captialanalysis.png",
+    technologies: [
+      { name: "TypeScript", icon: <SiTypescript /> },
+      { name: "React", icon: <FaReact /> },
+    ],
+    githubUrl: "https://github.com/csas-cheick/capital-analysis",
+    category: "Web Development",
+  },
+  {
     title: "CapitalPetroleum",
     description: "Système de gestion complet pour entreprise pétrolière.",
     longDescription:
@@ -66,6 +79,7 @@ const PROJECTS_DATA: Project[] = [
       { name: "SQL Server", icon: <FaDatabase /> },
     ],
     githubUrl: "https://github.com/csas-cheick/capital-system",
+    liveUrl: "https://capital-analysis.onrender.com",
     category: "Web Development",
   },
   {
@@ -95,19 +109,6 @@ const PROJECTS_DATA: Project[] = [
     ],
     githubUrl: "https://github.com/csas-cheick/abs-app",
     category: "Mobile",
-  },
-  {
-    title: "Capital Analysis",
-    description: "Site web corporatif pour entreprise Capital Analysis.",
-    longDescription:
-      "Un site vitrine professionnel présentant les services, activités et engagements de l'entreprise Capital Analysis. Développé avec une architecture moderne, une interface responsive et une mise en avant soignée du contenu pour renforcer l'identité numérique de l'entreprise.",
-    image: "/images/screenshots/captialanalysis.png",
-    technologies: [
-      { name: "TypeScript", icon: <SiTypescript /> },
-      { name: "React", icon: <FaReact /> },
-    ],
-    githubUrl: "https://github.com/csas-cheick/capital-analysis",
-    category: "Web Development",
   },
 ];
 
