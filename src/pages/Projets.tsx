@@ -209,12 +209,26 @@ const Projets: FC = () => {
                 key={index}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group"
               >
-                {/* Project Image Placeholder */}
+                {/* Project Image */}
                 <div className="relative h-64 bg-gradient-to-br from-indigo-100 to-blue-100 overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                    <span className="text-6xl">📊</span>
-                  </div>
-                  <div className="absolute inset-0 bg-indigo-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback si l'image n'existe pas
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent && !parent.querySelector('.fallback-icon')) {
+                        const fallback = document.createElement('div');
+                        fallback.className = 'fallback-icon absolute inset-0 flex items-center justify-center text-gray-400';
+                        fallback.innerHTML = '<span class="text-6xl">📊</span>';
+                        parent.appendChild(fallback);
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
                 {/* Project Info */}
