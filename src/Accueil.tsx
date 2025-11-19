@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 import illustrationHome from "./assets/illustration_home.svg";
 import illustrationPerso from "./assets/illustration_perso.svg";
+import { useLanguage } from "./context/LanguageContext";
 
 const Accueil: FC = () => {
+  const { t } = useLanguage();
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -15,26 +17,26 @@ const Accueil: FC = () => {
             {/* Section gauche - Texte */}
             <div>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-                Salut ! <span className="inline-block animate-wave">👋🏻</span>
+                {t.home.greeting} <span className="inline-block animate-wave">👋🏻</span>
               </h1>
               <p className="text-2xl md:text-3xl text-gray-700 mb-4">
-                JE SUIS <span className="text-indigo-600 font-bold">CHEICK SALIHOU AHMED CHEICK CHAIBOU</span>
+                {t.home.intro} <span className="text-indigo-600 font-bold">{t.home.name}</span>
               </p>
               <p className="text-lg text-gray-600 mb-8">
-                Etudiant, passionné par la technologie, la robotique et l’IA, avec un intérêt marqué pour les environnements innovants et les systèmes intelligents.
+                {t.home.description}
               </p>
               <div className="flex gap-4">
                 <Link
                   to="/projets"
                   className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
-                  Voir mes projets
+                  {t.home.viewProjects}
                 </Link>
                 <Link
                   to="/resume"
                   className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors border-2 border-indigo-600"
                 >
-                  Mon CV
+                  {t.home.myResume}
                 </Link>
               </div>
             </div>
@@ -60,31 +62,13 @@ const Accueil: FC = () => {
             {/* Section gauche - Texte */}
             <div className="flex-1">
               <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-8">
-                PERMETTEZ-MOI DE ME <span className="text-indigo-600">PRÉSENTER</span>
+                {t.home.aboutTitle} <span className="text-indigo-600">{t.home.aboutTitleHighlight}</span>
               </h2>
               
               <div className="space-y-5 text-gray-700 text-base md:text-lg lg:text-xl leading-relaxed">
-                <p>
-                  Étudiant en Licence 3 Sciences Informatiques, je suis passionné par les 
-                  <strong className="text-gray-900">technologies modernes</strong>, 
-                  la <strong className="text-gray-900">robotique</strong> et 
-                  l'<strong className="text-gray-900">intelligence artificielle</strong>. 
-                  J’aime analyser, comprendre et améliorer les systèmes pour créer des solutions efficaces et intuitives.
-                </p>
-
-                <p>
-                  Je possède des compétences en 
-                  <strong className="text-indigo-600">développement web</strong>, 
-                  <strong className="text-indigo-600">mobile</strong> et 
-                  <strong className="text-indigo-600">logiciel</strong>, ainsi qu’en 
-                  <strong className="text-indigo-600">Linux</strong>, 
-                  <strong className="text-indigo-600">réseaux</strong> et 
-                  <strong className="text-indigo-600">bases de données</strong>. 
-                  Je m’intéresse particulièrement aux <strong className="text-gray-900">systèmes intelligents</strong> et aux 
-                  <strong className="text-gray-900">technologies émergentes</strong>.
-                </p>
+                <p>{t.home.aboutText1}</p>
+                <p>{t.home.aboutText2}</p>
               </div>
-
             </div>
 
             {/* Section droite - Image */}
@@ -105,10 +89,10 @@ const Accueil: FC = () => {
       <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            RETROUVEZ-MOI SUR
+            {t.home.socialTitle}
           </h2>
           <p className="text-lg text-gray-600 mb-12">
-            N'hésitez pas à me contacter
+            {t.home.socialSubtitle}
           </p>
           
           <div className="flex justify-center gap-6 flex-wrap">

@@ -4,6 +4,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import illustrationCV from "../assets/illustration_cv.svg";
+import { useLanguage } from "../context/LanguageContext";
 
 // Configuration de PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -11,6 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 const Resume: FC = () => {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const { t, language } = useLanguage();
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -40,11 +42,10 @@ const Resume: FC = () => {
             {/* Texte à gauche */}
             <div className="space-y-2 md:space-y-3">
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800">
-                Mon <span className="text-indigo-600">CV</span>
+                {t.resume.title} <span className="text-indigo-600">{t.resume.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed">
-                Découvrez mon parcours professionnel, mes compétences et mes réalisations. 
-                Un aperçu complet de mon expérience en développement et analyse de données.
+                {t.resume.subtitle}
               </p>
               <div className="flex flex-wrap gap-2 md:gap-3 pt-2">
                 <button
@@ -52,7 +53,7 @@ const Resume: FC = () => {
                   className="flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm md:text-base bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   <FaDownload className="text-base md:text-lg" />
-                  Télécharger le CV
+                  {t.resume.download}
                 </button>
                 <button
                   onClick={() => {
@@ -63,7 +64,7 @@ const Resume: FC = () => {
                   }}
                   className="px-4 md:px-5 py-2 md:py-2.5 text-sm md:text-base border-2 border-indigo-600 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-all duration-300"
                 >
-                  Consulter en ligne
+                  {t.resume.view}
                 </button>
               </div>
             </div>
@@ -85,8 +86,12 @@ const Resume: FC = () => {
         <div className="container mx-auto max-w-4xl">
         {/* Header avec bouton de téléchargement */}
         <div className="flex flex-col items-center mb-4 md:mb-6 gap-2 md:gap-3">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">Aperçu du CV</h2>
-          <p className="text-sm md:text-base text-gray-600">Parcourez les pages de mon curriculum vitae</p>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">
+            {language === 'fr' ? "Aperçu du CV" : "Resume Preview"}
+          </h2>
+          <p className="text-sm md:text-base text-gray-600">
+            {language === 'fr' ? "Parcourez les pages de mon curriculum vitae" : "Browse through my resume pages"}
+          </p>
         </div>
 
         {/* Aperçu du PDF */}
@@ -118,11 +123,11 @@ const Resume: FC = () => {
                   className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                 >
                   <FaChevronLeft />
-                  Précédent
+                  {language === 'fr' ? "Précédent" : "Previous"}
                 </button>
 
                 <span className="text-gray-700 font-medium">
-                  Page {pageNumber} sur {numPages}
+                  {language === 'fr' ? `Page ${pageNumber} sur ${numPages}` : `Page ${pageNumber} of ${numPages}`}
                 </span>
 
                 <button
@@ -130,7 +135,7 @@ const Resume: FC = () => {
                   disabled={pageNumber >= numPages}
                   className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                 >
-                  Suivant
+                  {language === 'fr' ? "Suivant" : "Next"}
                   <FaChevronRight />
                 </button>
               </div>
@@ -145,7 +150,7 @@ const Resume: FC = () => {
             className="flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
           >
             <FaDownload className="text-xl animate-bounce" />
-            Télécharger le CV au format PDF
+            {language === 'fr' ? "Télécharger le CV au format PDF" : "Download Resume as PDF"}
           </button>
         </div>
       </div>

@@ -2,8 +2,10 @@ import { FC, useState } from "react";
 import { FaChevronDown, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter, FaPaperPlane } from "react-icons/fa";
 import illustrationContact from "../assets/illustration_contact.svg";
 import emailjs from '@emailjs/browser';
+import { useLanguage } from "../context/LanguageContext";
 
 const Contact: FC = () => {
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -73,15 +75,15 @@ const Contact: FC = () => {
             {/* Texte à gauche */}
             <div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-2 md:mb-3">
-                Me <span className="text-indigo-600">Contacter</span>
+                {t.contact.title} <span className="text-indigo-600">{t.contact.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-2 md:mb-3">
-                Vous avez un projet en tête ou souhaitez discuter d'une opportunité ? 
-                N'hésitez pas à me contacter !
+                {t.contact.subtitle}
               </p>
               <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-4">
-                Je suis toujours ouvert aux <strong className="text-indigo-600">nouvelles collaborations</strong>, 
-                <strong className="text-indigo-600"> projets freelance</strong> et <strong className="text-indigo-600">opportunités professionnelles</strong>.
+                {language === 'fr' 
+                  ? "Je suis toujours ouvert aux nouvelles collaborations, projets freelance et opportunités professionnelles."
+                  : "I am always open to new collaborations, freelance projects and professional opportunities."}
               </p>
 
               {/* Contact Info Cards */}
@@ -102,7 +104,7 @@ const Contact: FC = () => {
                     <FaPhone className="text-indigo-600 text-sm md:text-base" />
                   </div>
                   <div>
-                    <p className="text-[10px] md:text-xs text-gray-500">Téléphone</p>
+                    <p className="text-[10px] md:text-xs text-gray-500">{language === 'fr' ? "Téléphone" : "Phone"}</p>
                     <a href="tel:+21653414178" className="text-xs md:text-sm text-gray-800 font-medium hover:text-indigo-600">
                       +216 53 414 178
                     </a>
@@ -114,8 +116,10 @@ const Contact: FC = () => {
                     <FaMapMarkerAlt className="text-indigo-600 text-sm md:text-base" />
                   </div>
                   <div>
-                    <p className="text-[10px] md:text-xs text-gray-500">Localisation</p>
-                    <p className="text-xs md:text-sm text-gray-800 font-medium">Monastir, Tunisie</p>
+                    <p className="text-[10px] md:text-xs text-gray-500">{language === 'fr' ? "Localisation" : "Location"}</p>
+                    <p className="text-xs md:text-sm text-gray-800 font-medium">
+                      {language === 'fr' ? "Monastir, Tunisie" : "Monastir, Tunisia"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -124,7 +128,7 @@ const Contact: FC = () => {
               <button
                 onClick={scrollToForm}
                 className="animate-bounce mt-1 text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer"
-                aria-label="Défiler vers le formulaire"
+                aria-label={language === 'fr' ? "Défiler vers le formulaire" : "Scroll to form"}
               >
                 <FaChevronDown className="text-xl md:text-2xl" />
               </button>
@@ -146,10 +150,12 @@ const Contact: FC = () => {
       <section id="contact-form-section" className="py-16 px-4 bg-gray-50">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
-            Envoyez-moi un message
+            {t.contact.formTitle}
           </h2>
           <p className="text-center text-gray-600 mb-12">
-            Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais.
+            {language === 'fr' 
+              ? "Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais."
+              : "Fill out the form below and I will get back to you as soon as possible."}
           </p>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -158,16 +164,15 @@ const Contact: FC = () => {
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span>Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.</span>
+                <span>{t.contact.success}</span>
               </div>
             )}
-
             {submitStatus === "error" && (
               <div className="mb-6 p-4 bg-red-100 text-red-800 rounded-lg flex items-center gap-3">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
-                <span>Une erreur s'est produite. Veuillez réessayer.</span>
+                <span>{t.contact.error}</span>
               </div>
             )}
 
@@ -176,7 +181,7 @@ const Contact: FC = () => {
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Nom complet *
+                    {t.contact.name} *
                   </label>
                   <input
                     type="text"
@@ -186,7 +191,7 @@ const Contact: FC = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none transition-colors"
-                    placeholder="Votre nom"
+                    placeholder={language === 'fr' ? "Votre nom" : "Your name"}
                   />
                 </div>
 
@@ -203,7 +208,7 @@ const Contact: FC = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none transition-colors"
-                    placeholder="votre.email@exemple.com"
+                    placeholder={language === 'fr' ? "votre.email@exemple.com" : "your.email@example.com"}
                   />
                 </div>
               </div>
@@ -211,7 +216,7 @@ const Contact: FC = () => {
               {/* Subject */}
               <div>
                 <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Sujet *
+                  {language === 'fr' ? "Sujet" : "Subject"} *
                 </label>
                 <input
                   type="text"
@@ -221,14 +226,14 @@ const Contact: FC = () => {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none transition-colors"
-                  placeholder="Objet de votre message"
+                  placeholder={language === 'fr' ? "Objet de votre message" : "Subject of your message"}
                 />
               </div>
 
               {/* Message */}
               <div>
                 <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Message *
+                  {t.contact.message} *
                 </label>
                 <textarea
                   id="message"
@@ -238,7 +243,7 @@ const Contact: FC = () => {
                   required
                   rows={6}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-600 focus:outline-none transition-colors resize-none"
-                  placeholder="Décrivez votre projet ou votre demande..."
+                  placeholder={language === 'fr' ? "Décrivez votre projet ou votre demande..." : "Describe your project or request..."}
                 />
               </div>
 
@@ -254,12 +259,12 @@ const Contact: FC = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Envoi en cours...
+                    {t.contact.sending}
                   </>
                 ) : (
                   <>
                     <FaPaperPlane />
-                    Envoyer le message
+                    {t.contact.send}
                   </>
                 )}
               </button>
@@ -269,7 +274,7 @@ const Contact: FC = () => {
           {/* Social Links */}
           <div className="mt-12 text-center">
             <h3 className="text-xl font-semibold text-gray-800 mb-6">
-              Ou rejoignez-moi sur les réseaux sociaux
+              {t.contact.socialConnect}
             </h3>
             <div className="flex justify-center gap-4">
               <a

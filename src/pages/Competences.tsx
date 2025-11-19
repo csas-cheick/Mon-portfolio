@@ -34,6 +34,7 @@ import {
 import { TbBrain } from "react-icons/tb";
 import { HiGlobeAlt } from "react-icons/hi";
 import illustrationCompetences from "../assets/illustration_competences.svg";
+import { useLanguage } from "../context/LanguageContext";
 
 interface Skill {
   name: string;
@@ -49,6 +50,7 @@ interface SkillCategory {
 }
 
 const Competences: FC = () => {
+  const { t, language } = useLanguage();
   const scrollToSkills = () => {
     const element = document.getElementById('skills-section');
     if (element) {
@@ -58,9 +60,11 @@ const Competences: FC = () => {
 
   const skillCategories: SkillCategory[] = [
     {
-      title: "Développement Web",
+      title: language === 'fr' ? "Développement Web" : "Web Development",
       icon: <HiGlobeAlt className="text-3xl text-indigo-600" />,
-      description: "Interfaces modernes et responsives • Intégration API REST • Optimisation UX",
+      description: language === 'fr' 
+        ? "Interfaces modernes et responsives • Intégration API REST • Optimisation UX"
+        : "Modern responsive interfaces • REST API integration • UX optimization",
       skills: [
         { name: "JavaScript", icon: <SiJavascript className="text-yellow-400" /> },
         { name: "TypeScript", icon: <SiTypescript className="text-blue-600" /> },
@@ -72,18 +76,22 @@ const Competences: FC = () => {
       ],
     },
     {
-      title: "Développement Mobile",
+      title: language === 'fr' ? "Développement Mobile" : "Mobile Development",
       icon: <FaMobileAlt className="text-3xl text-pink-600" />,
-      description: "Applications multiplateformes • UI/UX mobile cohérente • Connexion backend API",
+      description: language === 'fr' 
+        ? "Applications multiplateformes • UI/UX mobile cohérente • Connexion backend API"
+        : "Cross-platform applications • Consistent mobile UI/UX • Backend API connection",
       skills: [
         { name: "Flutter", icon: <SiFlutter className="text-blue-400" /> },
         { name: "React Native", icon: <FaReact className="text-cyan-400" /> },
       ],
     },
     {
-      title: "Développement Logiciel",
+      title: language === 'fr' ? "Développement Logiciel" : "Software Development",
       icon: <FaLaptopCode className="text-3xl text-purple-600" />,
-      description: "Programmation orientée objet • Architecture MVC • API REST",
+      description: language === 'fr' 
+        ? "Programmation orientée objet • Architecture MVC • API REST"
+        : "Object-oriented programming • MVC Architecture • REST API",
       skills: [
         { name: "C# (ASP.NET Core)", icon: <SiDotnet className="text-purple-600" /> },
         { name: "Java", icon: <FaJava className="text-red-600" /> },
@@ -92,39 +100,47 @@ const Competences: FC = () => {
       ],
     },
     {
-      title: "Intelligence Artificielle",
+      title: language === 'fr' ? "Intelligence Artificielle" : "Artificial Intelligence",
       icon: <FaRobot className="text-3xl text-indigo-700" />,
-      description: "Apprentissage supervisé/non supervisé • KNN, Régression, SVM • Manipulation de datasets",
+      description: language === 'fr'
+        ? "Apprentissage supervisé/non supervisé • KNN, Régression, SVM • Manipulation de datasets"
+        : "Supervised/unsupervised learning • KNN, Regression, SVM • Dataset manipulation",
       skills: [
         { name: "Python", icon: <FaPython className="text-yellow-500" /> },
         { name: "Machine Learning", icon: <TbBrain className="text-indigo-600" /> },
-        { name: "Prétraitement des données", icon: <FaDatabase className="text-gray-600" /> },
+        { name: language === 'fr' ? "Prétraitement des données" : "Data preprocessing", icon: <FaDatabase className="text-gray-600" /> },
       ],
     },
     {
-      title: "Systèmes & Linux",
+      title: language === 'fr' ? "Systèmes & Linux" : "Systems & Linux",
       icon: <FaLinux className="text-3xl text-yellow-600" />,
-      description: "Administration Linux • Scripting Bash • LPIC-1 Essentials",
+      description: language === 'fr'
+        ? "Administration Linux • Scripting Bash • LPIC-1 Essentials"
+        : "Linux administration • Bash scripting • LPIC-1 Essentials",
       skills: [
         { name: "Linux", icon: <FaLinux className="text-yellow-600" /> },
         { name: "Bash", icon: <FaServer className="text-gray-700" /> },
-        { name: "Commandes shell", icon: <FaServer className="text-gray-600" /> },
+        { name: language === 'fr' ? "Commandes shell" : "Shell commands", icon: <FaServer className="text-gray-600" /> },
       ],
     },
     {
-      title: "Réseaux",
+      title: language === 'fr' ? "Réseaux" : "Networks",
       icon: <FaNetworkWired className="text-3xl text-blue-600" />,
-      description: "Modèle OSI • TCP/IP • Routage de base • Cisco NetAcad",
+      description: language === 'fr'
+        ? "Modèle OSI • TCP/IP • Routage de base • Cisco NetAcad"
+        : "OSI model • TCP/IP • Basic routing • Cisco NetAcad",
       skills: [
         { name: "TCP/IP", icon: <FaNetworkWired className="text-blue-600" /> },
-        { name: "Modèle OSI", icon: <FaNetworkWired className="text-indigo-600" /> },
+        { name: language === 'fr' ? "Modèle OSI" : "OSI Model", icon: <FaNetworkWired className="text-indigo-600" /> },
         { name: "Cisco NetAcad", icon: <FaNetworkWired className="text-blue-700" /> },
       ],
     },
     {
-      title: "Bases de Données",
+      title: language === 'fr' ? "Bases de Données" : "Databases",
       icon: <FaDatabase className="text-3xl text-green-600" />,
-      description: "Modélisation • Normalisation • Requêtes SQL • CRUD / Joins / Index",
+      description: language === 'fr'
+        ? "Modélisation • Normalisation • Requêtes SQL • CRUD / Joins / Index"
+        : "Modeling • Normalization • SQL queries • CRUD / Joins / Index",
       skills: [
         { name: "MySQL", icon: <SiMysql className="text-blue-600" /> },
         { name: "SQL Server", icon: <FaDatabase className="text-red-600" /> },
@@ -133,9 +149,11 @@ const Competences: FC = () => {
       ],
     },
     {
-      title: "Outils & Technologies",
+      title: language === 'fr' ? "Outils & Technologies" : "Tools & Technologies",
       icon: <FaTools className="text-3xl text-gray-700" />,
-      description: "Outils essentiels pour le développement moderne",
+      description: language === 'fr'
+        ? "Outils essentiels pour le développement moderne"
+        : "Essential tools for modern development",
       skills: [
         { name: "Git & GitHub", icon: <FaGitAlt className="text-orange-600" /> },
         { name: "Figma", icon: <SiFigma className="text-purple-600" /> },
@@ -154,20 +172,20 @@ const Competences: FC = () => {
             {/* Texte à gauche */}
             <div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-2 md:mb-3">
-                Mes <span className="text-indigo-600">Compétences</span>
+                {t.skills.title} <span className="text-indigo-600">{t.skills.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-2 md:mb-3">
-                Une expertise technique diversifiée dans le développement web, mobile, logiciel et les systèmes.
+                {t.skills.subtitle}
               </p>
               <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-4">
-                Des compétences en <strong className="text-indigo-600">développement full-stack</strong>, <strong className="text-indigo-600">intelligence artificielle</strong>, <strong className="text-indigo-600">systèmes Linux</strong> et <strong className="text-indigo-600">réseaux</strong>.
+                {t.skills.description}
               </p>
               
               {/* Scroll indicator */}
               <button
                 onClick={scrollToSkills}
                 className="animate-bounce mt-2 text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer"
-                aria-label="Défiler vers les compétences"
+                aria-label={language === 'fr' ? "Défiler vers les compétences" : "Scroll to skills"}
               >
                 <FaChevronDown className="text-2xl md:text-3xl" />
               </button>
@@ -189,10 +207,10 @@ const Competences: FC = () => {
       <section id="skills-section" className="py-12 md:py-16 px-4 bg-gray-50">
         <div className="container mx-auto max-w-7xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-3 md:mb-4">
-            Technologies & Compétences
+            {t.skills.sectionTitle}
           </h2>
           <p className="text-center text-sm md:text-base text-gray-600 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
-            Un ensemble de compétences techniques acquises à travers des projets, des formations et une pratique constante.
+            {t.skills.description}
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">

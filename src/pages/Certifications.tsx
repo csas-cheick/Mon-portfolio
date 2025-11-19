@@ -1,6 +1,7 @@
 import { FC, ReactElement, useState } from "react";
 import { FaLinux, FaShieldAlt, FaDatabase, FaCode, FaExternalLinkAlt, FaChevronDown, FaSyncAlt } from "react-icons/fa";
 import illustrationSucces from "../assets/illustration_succes.svg";
+import { useLanguage } from "../context/LanguageContext";
 
 interface Certification {
   date: string;
@@ -15,6 +16,7 @@ interface Certification {
 
 const Certifications: FC = () => {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const { t, language } = useLanguage();
 
   const scrollToCertifications = () => {
     const element = document.getElementById('certifications-section');
@@ -27,48 +29,97 @@ const Certifications: FC = () => {
     setFlippedCard(flippedCard === index ? null : index);
   };
 
-  const certifications: Certification[] = [
-    {
-      date: "Juillet 2025",
-      title: "LPIC-1 : Linux",
-      subtitle: "Linux Essentials",
-      organization: "Linux Professional Institute",
-      verificationUrl: "https://lpi.org/verify/LPI000653714/7k8c58pyyj",
-      icon: <FaLinux />,
-      color: "bg-yellow-500",
-      description: "Cette certification valide les compétences fondamentales en Linux, couvrant la ligne de commande, la gestion des fichiers, les permissions et l'administration système de base.",
-    },
-    {
-      date: "Avril 2025",
-      title: "Cybersécurité",
-      subtitle: "Introduction à la Cybersécurité",
-      organization: "Cisco Networking Academy",
-      verificationUrl: "https://www.credly.com/badges/252c099a-810f-4354-b852-1e96de3839b4/public_url",
-      icon: <FaShieldAlt />,
-      color: "bg-blue-500",
-      description: "Formation complète sur les principes de la cybersécurité, les menaces courantes, les techniques de protection des données et les meilleures pratiques de sécurité informatique.",
-    },
-    {
-      date: "Mai 2025",
-      title: "Science des données",
-      subtitle: "Introduction à la science des données",
-      organization: "Cisco Networking Academy",
-      verificationUrl: "https://www.credly.com/badges/0f9e39b0-fdeb-4603-b8a7-64850e04c42a/public_url",
-      icon: <FaDatabase />,
-      color: "bg-green-500",
-      description: "Apprentissage des concepts fondamentaux de la science des données, incluant l'analyse de données, la visualisation, les statistiques et l'introduction au machine learning.",
-    },
-    {
-      date: "Janvier 2025",
-      title: "C# Langage",
-      subtitle: "Foundational C#",
-      organization: "FreeCodeCamp & Microsoft",
-      verificationUrl: "https://www.freecodecamp.org/certification/csas-cheick/foundational-c-sharp-with-microsoft",
-      icon: <FaCode />,
-      color: "bg-purple-500",
-      description: "Maîtrise des fondamentaux du langage C#, incluant la syntaxe, les structures de données, la programmation orientée objet et le développement d'applications .NET.",
-    },
-  ];
+  const getCertificationsData = (): Certification[] => {
+    if (language === 'en') {
+      return [
+        {
+          date: "July 2025",
+          title: "LPIC-1: Linux",
+          subtitle: "Linux Essentials",
+          organization: "Linux Professional Institute",
+          verificationUrl: "https://lpi.org/verify/LPI000653714/7k8c58pyyj",
+          icon: <FaLinux />,
+          color: "bg-yellow-500",
+          description: "This certification validates fundamental Linux skills, covering command line, file management, permissions and basic system administration.",
+        },
+        {
+          date: "April 2025",
+          title: "Cybersecurity",
+          subtitle: "Introduction to Cybersecurity",
+          organization: "Cisco Networking Academy",
+          verificationUrl: "https://www.credly.com/badges/252c099a-810f-4354-b852-1e96de3839b4/public_url",
+          icon: <FaShieldAlt />,
+          color: "bg-blue-500",
+          description: "Comprehensive training on cybersecurity principles, common threats, data protection techniques and IT security best practices.",
+        },
+        {
+          date: "May 2025",
+          title: "Data Science",
+          subtitle: "Introduction to Data Science",
+          organization: "Cisco Networking Academy",
+          verificationUrl: "https://www.credly.com/badges/0f9e39b0-fdeb-4603-b8a7-64850e04c42a/public_url",
+          icon: <FaDatabase />,
+          color: "bg-green-500",
+          description: "Learning fundamental data science concepts, including data analysis, visualization, statistics and introduction to machine learning.",
+        },
+        {
+          date: "January 2025",
+          title: "C# Language",
+          subtitle: "Foundational C#",
+          organization: "FreeCodeCamp & Microsoft",
+          verificationUrl: "https://www.freecodecamp.org/certification/csas-cheick/foundational-c-sharp-with-microsoft",
+          icon: <FaCode />,
+          color: "bg-purple-500",
+          description: "Mastery of C# language fundamentals, including syntax, data structures, object-oriented programming and .NET application development.",
+        },
+      ];
+    }
+    // French version
+    return [
+      {
+        date: "Juillet 2025",
+        title: "LPIC-1 : Linux",
+        subtitle: "Linux Essentials",
+        organization: "Linux Professional Institute",
+        verificationUrl: "https://lpi.org/verify/LPI000653714/7k8c58pyyj",
+        icon: <FaLinux />,
+        color: "bg-yellow-500",
+        description: "Cette certification valide les compétences fondamentales en Linux, couvrant la ligne de commande, la gestion des fichiers, les permissions et l'administration système de base.",
+      },
+      {
+        date: "Avril 2025",
+        title: "Cybersécurité",
+        subtitle: "Introduction à la Cybersécurité",
+        organization: "Cisco Networking Academy",
+        verificationUrl: "https://www.credly.com/badges/252c099a-810f-4354-b852-1e96de3839b4/public_url",
+        icon: <FaShieldAlt />,
+        color: "bg-blue-500",
+        description: "Formation complète sur les principes de la cybersécurité, les menaces courantes, les techniques de protection des données et les meilleures pratiques de sécurité informatique.",
+      },
+      {
+        date: "Mai 2025",
+        title: "Science des données",
+        subtitle: "Introduction à la science des données",
+        organization: "Cisco Networking Academy",
+        verificationUrl: "https://www.credly.com/badges/0f9e39b0-fdeb-4603-b8a7-64850e04c42a/public_url",
+        icon: <FaDatabase />,
+        color: "bg-green-500",
+        description: "Apprentissage des concepts fondamentaux de la science des données, incluant l'analyse de données, la visualisation, les statistiques et l'introduction au machine learning.",
+      },
+      {
+        date: "Janvier 2025",
+        title: "C# Langage",
+        subtitle: "Foundational C#",
+        organization: "FreeCodeCamp & Microsoft",
+        verificationUrl: "https://www.freecodecamp.org/certification/csas-cheick/foundational-c-sharp-with-microsoft",
+        icon: <FaCode />,
+        color: "bg-purple-500",
+        description: "Maîtrise des fondamentaux du langage C#, incluant la syntaxe, les structures de données, la programmation orientée objet et le développement d'applications .NET.",
+      },
+    ];
+  };
+
+  const certifications = getCertificationsData();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -79,20 +130,20 @@ const Certifications: FC = () => {
             {/* Section gauche - Texte */}
             <div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-2 md:mb-3">
-                Mes <span className="text-indigo-600">Certifications</span>
+                {t.certifications.title} <span className="text-indigo-600">{t.certifications.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-2 md:mb-3">
-                Durant mon parcours, j'ai pu réaliser des certifications qui <strong>valident mes compétences</strong> dans différents domaines techniques.
+                {t.certifications.subtitle}
               </p>
               <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-3 md:mb-4">
-                Ces formations m'ont permis d'approfondir mes connaissances en <strong className="text-indigo-600">Linux</strong>, <strong className="text-indigo-600">cybersécurité</strong>, <strong className="text-indigo-600">science des données</strong> et <strong className="text-indigo-600">développement logiciel</strong>.
+                {t.certifications.subtitle}
               </p>
               
               {/* Scroll indicator */}
               <button
                 onClick={scrollToCertifications}
                 className="animate-bounce mt-2 text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer"
-                aria-label="Défiler vers les certifications"
+                aria-label={language === 'fr' ? "Défiler vers les certifications" : "Scroll to certifications"}
               >
                 <FaChevronDown className="text-2xl md:text-3xl" />
               </button>
@@ -116,7 +167,7 @@ const Certifications: FC = () => {
       <div id="certifications-section" className="bg-gray-50 py-8 md:py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 md:mb-3 text-center">
-            Toutes mes <span className="text-indigo-600">certifications</span>
+            {t.certifications.sectionTitle}
           </h2>
           <p className="text-center text-sm md:text-base text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">
             Chaque certification représente un engagement envers l'excellence et l'apprentissage continu
@@ -181,7 +232,9 @@ const Certifications: FC = () => {
                         <FaSyncAlt className="text-xs md:text-sm lg:text-base animate-spin-slow" />
                         <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-75"></div>
                       </div>
-                      <span className="animate-pulse">Cliquez pour voir les détails</span>
+                      <span className="animate-pulse">
+                        {language === 'fr' ? "Cliquez pour voir les détails" : "Click to see details"}
+                      </span>
                     </div>
                   </div>
 
@@ -216,13 +269,13 @@ const Certifications: FC = () => {
                         className="block w-full text-center px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm lg:text-base bg-white text-indigo-600 font-medium rounded-lg hover:bg-gray-100 transition-colors shadow-md"
                       >
                         <span className="flex items-center justify-center gap-1.5 md:gap-2">
-                          Vérifier la certification
+                          {language === 'fr' ? "Vérifier la certification" : "Verify certification"}
                           <FaExternalLinkAlt className="text-[10px] md:text-xs" />
                         </span>
                       </a>
                       <div className="flex items-center justify-center gap-1.5 md:gap-2 text-white/70 text-[10px] md:text-xs">
                         <FaSyncAlt className="text-xs md:text-sm" />
-                        <span>Cliquez pour retourner</span>
+                        <span>{language === 'fr' ? "Cliquez pour retourner" : "Click to flip back"}</span>
                       </div>
                     </div>
                   </div>

@@ -15,6 +15,7 @@ import {
   SiFirebase 
 } from "react-icons/si";
 import illustrationProjects from "../assets/illustration_projects.svg";
+import { useLanguage } from "../context/LanguageContext";
 
 // ========================
 // TYPES & INTERFACES
@@ -120,7 +121,163 @@ const PROJECTS_DATA: Project[] = [
 
 const Projets: FC = () => {
   // State
-  const [selectedCategory, setSelectedCategory] = useState("Tous");
+  const { t, language } = useLanguage();
+  const [selectedCategory, setSelectedCategory] = useState(language === 'fr' ? "Tous" : "All");
+
+  // Get projects data based on language
+  const getProjectsData = () => {
+    if (language === 'en') {
+      return [
+        {
+          title: "FadakCare",
+          description: "Smart cardiovascular screening platform.",
+          longDescription: "FadakCare is a comprehensive medical platform integrating intelligent screening based on AI models, patient management, appointment system, WebRTC teleconsultation, as well as advanced dashboards for doctors and administrators.",
+          image: "/images/screenshots/fadakcare.png",
+          technologies: [
+            { name: ".NET", icon: <SiDotnet /> },
+            { name: "React", icon: <FaReact /> },
+            { name: "TypeScript", icon: <SiTypescript /> },
+            { name: "MySQL", icon: <SiMysql /> },
+            { name: "WebRTC", icon: <SiWebrtc /> },
+          ],
+          githubUrl: "https://github.com/csas-cheick/fadakcare-frontend",
+          liveUrl: "https://fadakcare-frontend.onrender.com/",
+          category: "Full Stack & AI",
+        },
+        {
+          title: "Capital Analysis",
+          description: "Corporate website for Capital Analysis company.",
+          longDescription: "A professional showcase site presenting the services, activities and commitments of Capital Analysis. Developed with modern architecture, responsive interface and careful content presentation.",
+          image: "/images/screenshots/captialanalysis.png",
+          technologies: [
+            { name: "TypeScript", icon: <SiTypescript /> },
+            { name: "React", icon: <FaReact /> },
+          ],
+          githubUrl: "https://github.com/csas-cheick/capital-analysis",
+          liveUrl: "https://capital-analysis.onrender.com",
+          category: "Web Development",
+        },
+        {
+          title: "CapitalPetroleum",
+          description: "Complete management system for petroleum company.",
+          longDescription: "CapitalPetroleum is a business management solution for gas stations: sales, inventory, suppliers, employees, payments management, and real-time dashboards. Includes modular architecture and secure authentication.",
+          image: "/images/screenshots/capitalpetroleum.png",
+          technologies: [
+            { name: ".NET", icon: <SiDotnet /> },
+            { name: "React", icon: <FaReact /> },
+            { name: "TypeScript", icon: <SiTypescript /> },
+            { name: "SQL Server", icon: <FaDatabase /> },
+          ],
+          githubUrl: "https://github.com/csas-cheick/capital-system",
+          liveUrl: "https://capital-analysis.onrender.com",
+          category: "Web Development",
+        },
+        {
+          title: "Collections",
+          description: "Management platform for a sewing shop.",
+          longDescription: "A web application for managing products, orders, customers and payments for a sewing shop. Simple, modern interface optimized for a smooth experience. Includes dashboard and admin space.",
+          image: "/images/screenshots/collections.png",
+          technologies: [
+            { name: "React", icon: <FaReact /> },
+            { name: "TypeScript", icon: <SiTypescript /> },
+            { name: ".NET", icon: <SiDotnet /> },
+            { name: "MySQL", icon: <SiMysql /> },
+          ],
+          githubUrl: "https://github.com/csas-cheick/collections",
+          liveUrl: "https://collections-f6e2.onrender.com",
+          category: "Web Development",
+        },
+        {
+          title: "ABS",
+          description: "Multimedia communication mobile app (announcements, videos, podcasts...).",
+          longDescription: "ABS is a mobile app for sharing announcements, videos and podcasts, including Firebase authentication, real-time publication management, and modern Flutter interface.",
+          image: "/images/screenshots/abs.png",
+          technologies: [
+            { name: "Flutter", icon: <SiFlutter /> },
+            { name: "Firebase", icon: <SiFirebase /> },
+          ],
+          githubUrl: "https://github.com/csas-cheick/abs-app",
+          category: "Mobile",
+        },
+      ];
+    }
+    // French version
+    return [
+      {
+        title: "FadakCare",
+        description: "Plateforme intelligente de dépistage cardiovasculaire.",
+        longDescription: "FadakCare est une plateforme médicale complète intégrant un dépistage intelligent basé sur des modèles d'IA, une gestion des patients, un système de rendez-vous, une téléconsultation WebRTC, ainsi que des tableaux de bord avancés pour médecins et administrateurs.",
+        image: "/images/screenshots/fadakcare.png",
+        technologies: [
+          { name: ".NET", icon: <SiDotnet /> },
+          { name: "React", icon: <FaReact /> },
+          { name: "TypeScript", icon: <SiTypescript /> },
+          { name: "MySQL", icon: <SiMysql /> },
+          { name: "WebRTC", icon: <SiWebrtc /> },
+        ],
+        githubUrl: "https://github.com/csas-cheick/fadakcare-frontend",
+        liveUrl: "https://fadakcare-frontend.onrender.com/",
+        category: "Full Stack & IA",
+      },
+      {
+        title: "Capital Analysis",
+        description: "Site web corporatif pour entreprise Capital Analysis.",
+        longDescription: "Un site vitrine professionnel présentant les services, activités et engagements de l'entreprise Capital Analysis. Développé avec une architecture moderne, une interface responsive et une mise en avant soignée du contenu pour renforcer l'identité numérique de l'entreprise.",
+        image: "/images/screenshots/captialanalysis.png",
+        technologies: [
+          { name: "TypeScript", icon: <SiTypescript /> },
+          { name: "React", icon: <FaReact /> },
+        ],
+        githubUrl: "https://github.com/csas-cheick/capital-analysis",
+        liveUrl: "https://capital-analysis.onrender.com",
+        category: "Web Development",
+      },
+      {
+        title: "CapitalPetroleum",
+        description: "Système de gestion complet pour entreprise pétrolière.",
+        longDescription: "CapitalPetroleum est une solution de gestion d'entreprise destinée aux stations-service : gestion des ventes, stocks, fournisseurs, employés, paiements, et tableaux de bord en temps réel. L'application inclut une architecture modulaire, une authentification sécurisée, et des rapports automatiques.",
+        image: "/images/screenshots/capitalpetroleum.png",
+        technologies: [
+          { name: ".NET", icon: <SiDotnet /> },
+          { name: "React", icon: <FaReact /> },
+          { name: "TypeScript", icon: <SiTypescript /> },
+          { name: "SQL Server", icon: <FaDatabase /> },
+        ],
+        githubUrl: "https://github.com/csas-cheick/capital-system",
+        liveUrl: "https://capital-analysis.onrender.com",
+        category: "Web Development",
+      },
+      {
+        title: "Collections",
+        description: "Plateforme de gestion pour une boutique de couture.",
+        longDescription: "Une application web permettant la gestion des produits, commandes, clients et paiements pour une boutique de couture. L'interface est simple, moderne et optimisée pour offrir une expérience fluide. Le projet inclut également un tableau de bord, un espace administrateur et un module statistique.",
+        image: "/images/screenshots/collections.png",
+        technologies: [
+          { name: "React", icon: <FaReact /> },
+          { name: "TypeScript", icon: <SiTypescript /> },
+          { name: ".NET", icon: <SiDotnet /> },
+          { name: "MySQL", icon: <SiMysql /> },
+        ],
+        githubUrl: "https://github.com/csas-cheick/collections",
+        liveUrl: "https://collections-f6e2.onrender.com",
+        category: "Web Development",
+      },
+      {
+        title: "ABS",
+        description: "Application mobile de communication multimédia (annonces, vidéos, podcasts…).",
+        longDescription: "ABS est une application mobile permettant le partage d'annonces, de vidéos et de podcasts, incluant un système d'authentification Firebase, une gestion en temps réel des publications, et une interface moderne conçue avec Flutter. Le backend assure une gestion sécurisée des utilisateurs, rôles et contenus.",
+        image: "/images/screenshots/abs.png",
+        technologies: [
+          { name: "Flutter", icon: <SiFlutter /> },
+          { name: "Firebase", icon: <SiFirebase /> },
+        ],
+        githubUrl: "https://github.com/csas-cheick/abs-app",
+        category: "Mobile",
+      },
+    ];
+  };
+
+  const PROJECTS_DATA = getProjectsData();
 
   // Utilities
   const scrollToProjects = () => {
@@ -131,8 +288,9 @@ const Projets: FC = () => {
   };
 
   // Computed values
-  const categories = ["Tous", ...new Set(PROJECTS_DATA.map(p => p.category))];
-  const filteredProjects = selectedCategory === "Tous" 
+  const allLabel = language === 'fr' ? "Tous" : "All";
+  const categories = [allLabel, ...new Set(PROJECTS_DATA.map(p => p.category))];
+  const filteredProjects = selectedCategory === allLabel 
     ? PROJECTS_DATA 
     : PROJECTS_DATA.filter(p => p.category === selectedCategory);
 
@@ -149,20 +307,20 @@ const Projets: FC = () => {
             {/* Texte à gauche */}
             <div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 mb-3 md:mb-4">
-                Mes <span className="text-indigo-600">Projets</span>
+                {t.projects.title} <span className="text-indigo-600">{t.projects.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-3 md:mb-4">
-                Une sélection de projets sur lesquels j'ai travaillé, démontrant mes compétences en développement web, analyse de données et ingénierie logicielle.
+                {t.projects.subtitle}
               </p>
               <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-4 md:mb-6">
-                Chaque projet représente une <strong className="text-indigo-600">solution concrète</strong> à des problématiques réelles, développée avec des <strong className="text-indigo-600">technologies modernes</strong>.
+                {t.projects.description}
               </p>
               
               {/* Scroll indicator */}
               <button
                 onClick={scrollToProjects}
                 className="animate-bounce mt-2 text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer"
-                aria-label="Défiler vers les projets"
+                aria-label={language === 'fr' ? "Défiler vers les projets" : "Scroll to projects"}
               >
                 <FaChevronDown className="text-2xl md:text-3xl" />
               </button>
@@ -185,7 +343,7 @@ const Projets: FC = () => {
         <div className="container mx-auto max-w-6xl">
           {/* Section Title */}
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
-            Réalisations
+            {t.projects.sectionTitle}
           </h2>
 
           {/* Category Filter */}
@@ -279,7 +437,7 @@ const Projets: FC = () => {
                         className="flex items-center gap-2 px-4 py-2 text-sm md:text-base bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
                       >
                         <FaGithub />
-                        Code
+                        {t.projects.code}
                       </a>
                     )}
                     {project.liveUrl && (
@@ -290,7 +448,7 @@ const Projets: FC = () => {
                         className="flex items-center gap-2 px-4 py-2 text-sm md:text-base bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                       >
                         <FaExternalLinkAlt />
-                        Demo
+                        {t.projects.demo}
                       </a>
                     )}
                   </div>
