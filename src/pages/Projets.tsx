@@ -16,6 +16,10 @@ import {
 } from "react-icons/si";
 import illustrationProjects from "../assets/illustration_projects.svg";
 
+// ========================
+// TYPES & INTERFACES
+// ========================
+
 interface Project {
   title: string;
   description: string;
@@ -27,12 +31,16 @@ interface Project {
   category: string;
 }
 
+// ========================
+// DATA
+// ========================
+
 const PROJECTS_DATA: Project[] = [
   {
     title: "FadakCare",
     description: "Plateforme intelligente de dépistage cardiovasculaire.",
     longDescription:
-      "FadakCare est une plateforme médicale complète intégrant un dépistage intelligent basé sur des modèles d'IA, une gestion des patients, un système de rendez-vous, une téléconsultation WebRTC, ainsi que des tableaux de bord avancés pour médecins et administrateurs.",
+      "FadakCare est une plateforme médicale complète intégrant un dépistage intelligent basé sur des modèles d'IA, une gestion des patients, un système de rendez-vous, une téléconsultation WebRTC, ainsi que des tableaux de bord avancés pour médecins et administrateurs. Le projet combine backend .NET, frontend React, WebRTC, notifications et analyses prédictives.",
     image: "/images/screenshots/fadakcare.png",
     technologies: [
       { name: ".NET", icon: <SiDotnet /> },
@@ -106,6 +114,10 @@ const PROJECTS_DATA: Project[] = [
   },
 ];
 
+// ========================
+// COMPONENT
+// ========================
+
 const Projets: FC = () => {
   // State
   const [selectedCategory, setSelectedCategory] = useState("Tous");
@@ -123,6 +135,10 @@ const Projets: FC = () => {
   const filteredProjects = selectedCategory === "Tous" 
     ? PROJECTS_DATA 
     : PROJECTS_DATA.filter(p => p.category === selectedCategory);
+
+  // ========================
+  // RENDER
+  // ========================
 
   return (
     <div className="min-h-screen">
