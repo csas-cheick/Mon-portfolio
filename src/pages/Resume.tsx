@@ -20,7 +20,7 @@ const Resume: FC = () => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/cv2.pdf';
+    link.href = '/cv.pdf';
     link.download = 'CV_CHEICK_SALIHOU_AHMED_CHEICK_CHAIBOU.pdf';
     link.click();
   };
@@ -98,7 +98,7 @@ const Resume: FC = () => {
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden p-8 transition-colors duration-300">
           <div className="flex flex-col items-center">
             <Document
-              file="/cv2.pdf"
+              file="/cv.pdf"
               onLoadSuccess={onDocumentLoadSuccess}
               loading={
                 <div className="flex items-center justify-center h-96">
