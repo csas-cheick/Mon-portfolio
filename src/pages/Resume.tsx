@@ -13,6 +13,7 @@ const Resume: FC = () => {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { t, language } = useLanguage();
+  const cvFile = language === 'fr' ? '/cv_francais.pdf' : '/cv_anglais.pdf';
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -20,8 +21,8 @@ const Resume: FC = () => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/cv.pdf';
-    link.download = 'CV_CHEICK_SALIHOU_AHMED_CHEICK_CHAIBOU.pdf';
+    link.href = cvFile;
+    link.download = language === 'fr' ? 'CV_CHEICK_SALIHOU_AHMED_CHEICK_CHAIBOU_FR.pdf' : 'CV_CHEICK_SALIHOU_AHMED_CHEICK_CHAIBOU_EN.pdf';
     link.click();
   };
 
@@ -98,7 +99,7 @@ const Resume: FC = () => {
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden p-8 transition-colors duration-300">
           <div className="flex flex-col items-center">
             <Document
-              file="/cv.pdf"
+              file={cvFile}
               onLoadSuccess={onDocumentLoadSuccess}
               loading={
                 <div className="flex items-center justify-center h-96">
