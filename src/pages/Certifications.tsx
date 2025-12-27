@@ -255,7 +255,7 @@ const Certifications: FC = () => {
 
             {/* Certifications Grid */}
             <motion.div 
-              className="grid md:grid-cols-2 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -274,43 +274,50 @@ const Certifications: FC = () => {
                     {/* Top Gradient Bar */}
                     <div className={`h-1.5 bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo}`} />
                     
-                    <div className="p-6">
+                    <div className="p-4 sm:p-6">
                       {/* Header */}
-                      <div className="flex items-start gap-4 mb-4">
-                        {/* Icon */}
-                        <motion.div 
-                          className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${cert.gradientFrom} ${cert.gradientTo} flex items-center justify-center text-white text-2xl shadow-lg`}
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                        >
-                          {cert.icon}
-                        </motion.div>
-                        
-                        {/* Title & Org */}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                            {cert.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
-                            {cert.subtitle}
-                          </p>
+                      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
+                        {/* Icon + Title row on mobile */}
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          {/* Icon */}
+                          <motion.div 
+                            className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${cert.gradientFrom} ${cert.gradientTo} flex items-center justify-center text-white text-xl sm:text-2xl shadow-lg`}
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                          >
+                            {cert.icon}
+                          </motion.div>
+                          
+                          {/* Title & Org */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-base sm:text-lg font-bold text-gray-800 dark:text-white mb-0.5 sm:mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                              {cert.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">
+                              {cert.subtitle}
+                            </p>
+                          </div>
                         </div>
                         
-                        {/* Date Badge */}
-                        <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs font-semibold flex items-center gap-1.5`}>
+                        {/* Date Badge - Full width on mobile */}
+                        <div className={`flex-shrink-0 self-start sm:self-auto px-3 py-1.5 rounded-lg bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs font-semibold flex items-center gap-1.5 w-fit`}>
                           <FaCalendarAlt className="text-xs" />
                           {cert.date}
                         </div>
                       </div>
                       
                       {/* Organization */}
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-4">
-                        <FaBuilding className="text-xs" />
-                        <span>{cert.organization}</span>
-                        <FaCheckCircle className="text-green-500 ml-auto" />
-                        <span className="text-green-600 dark:text-green-400 text-xs font-medium">
-                          {language === 'fr' ? "Vérifié" : "Verified"}
-                        </span>
+                      <div className="flex flex-wrap items-center gap-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-4">
+                        <div className="flex items-center gap-2">
+                          <FaBuilding className="text-xs flex-shrink-0" />
+                          <span className="truncate">{cert.organization}</span>
+                        </div>
+                        <div className="flex items-center gap-1 ml-auto">
+                          <FaCheckCircle className="text-green-500 flex-shrink-0" />
+                          <span className="text-green-600 dark:text-green-400 text-xs font-medium">
+                            {language === 'fr' ? "Vérifié" : "Verified"}
+                          </span>
+                        </div>
                       </div>
                       
                       {/* Description - Visible on hover */}
@@ -345,13 +352,13 @@ const Certifications: FC = () => {
                         href={cert.verificationUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-sm font-semibold hover:shadow-lg transition-all duration-300`}
+                        className={`inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs sm:text-sm font-semibold hover:shadow-lg transition-all duration-300 w-full sm:w-auto`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         <FaCheckCircle />
-                        {language === 'fr' ? "Vérifier le certificat" : "Verify certificate"}
-                        <FaExternalLinkAlt className="text-xs" />
+                        <span className="truncate">{language === 'fr' ? "Vérifier le certificat" : "Verify certificate"}</span>
+                        <FaExternalLinkAlt className="text-xs flex-shrink-0" />
                       </motion.a>
                     </div>
                   </div>
