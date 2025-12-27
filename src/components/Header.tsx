@@ -1,23 +1,54 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import ReactCountryFlag from "react-country-flag";
 import { FaSun, FaMoon } from "react-icons/fa";
+import { 
+  HiHome, 
+  HiCode, 
+  HiFolder, 
+  HiBadgeCheck, 
+  HiDocumentText, 
+  HiMail,
+  HiMenuAlt3,
+  HiX
+} from "react-icons/hi";
 
 const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+      
+      // Calculer la progression du scroll
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+      setScrollProgress(progress);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fermer le menu mobile lors du changement de route
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   const navLinks = [
-    { name: t.nav.home, path: "/" },
-    { name: t.nav.skills, path: "/competences" },
-    { name: t.nav.projects, path: "/projets" },
-    { name: t.nav.certifications, path: "/certifications" },
-    { name: t.nav.resume, path: "/resume" },
-    { name: t.nav.contact, path: "/contact" },
+    { name: t.nav.home, path: "/", icon: HiHome },
+    { name: t.nav.skills, path: "/competences", icon: HiCode },
+    { name: t.nav.projects, path: "/projets", icon: HiFolder },
+    { name: t.nav.certifications, path: "/certifications", icon: HiBadgeCheck },
+    { name: t.nav.resume, path: "/resume", icon: HiDocumentText },
+    { name: t.nav.contact, path: "/contact", icon: HiMail },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -27,146 +58,256 @@ const Header: FC = () => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo / Brand */}
-          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
-            csas_cheick
-          </Link>
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled 
+            ? "bg-white/70 dark:bg-gray-900/70 backdrop-blur-2xl shadow-lg shadow-indigo-500/5 dark:shadow-indigo-500/10 border-b border-gray-200/50 dark:border-gray-700/50" 
+            : "bg-transparent"
+        }`}
+      >
+        {/* Barre de progression du scroll */}
+        <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-150" 
+          style={{ width: `${scrollProgress}%` }} 
+        />
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <ul className="flex space-x-8">
-              {navLinks.map((link) => (
-                <li key={link.path} className="relative group">
-                  <Link
-                    to={link.path}
-                    className={`text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium pb-1 block ${
-                      isActive(link.path) ? "text-indigo-600 dark:text-indigo-400" : ""
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                  <span
-                    className={`absolute bottom-0 left-0 h-0.5 bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 ${
-                      isActive(link.path) ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
-                  ></span>
-                </li>
-              ))}
-            </ul>
-            
-            <div className="flex items-center space-x-4">
+        <nav className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-18">
+            {/* Logo / Brand */}
+            <Link to="/" className="group relative flex items-center gap-3">
+              {/* Logo Icon */}
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
+                  <span className="text-white font-bold text-lg">C</span>
+                </div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300" />
+              </div>
+              
+              {/* Logo Text */}
+              <div className="hidden sm:block">
+                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                  csas_cheick
+                </span>
+                <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300" />
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center">
+              {/* Nav Pills Container */}
+              <div className="flex items-center bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-1.5 shadow-inner">
+                {navLinks.map((link) => {
+                  const Icon = link.icon;
+                  const active = isActive(link.path);
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                        active 
+                          ? "text-white" 
+                          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                      }`}
+                    >
+                      {active && (
+                        <motion.div
+                          layoutId="activeNavBg"
+                          className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl shadow-lg shadow-indigo-500/25"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <Icon className={`w-4 h-4 relative z-10 ${active ? "text-white" : ""}`} />
+                      <span className="relative z-10">{link.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
               {/* Theme Toggle */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                className="relative p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-yellow-400 transition-colors overflow-hidden group"
                 aria-label="Toggle theme"
               >
-                {theme === 'light' ? <FaMoon className="w-5 h-5" /> : <FaSun className="w-5 h-5" />}
-              </button>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={theme}
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 20, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="relative z-10"
+                  >
+                    {theme === 'light' ? <FaMoon className="w-5 h-5" /> : <FaSun className="w-5 h-5" />}
+                  </motion.div>
+                </AnimatePresence>
+              </motion.button>
 
               {/* Language Switcher */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={toggleLanguage}
-                className="flex items-center justify-center p-2 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 rounded-lg transition-colors"
+                className="relative flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 hover:from-indigo-100 hover:to-purple-100 dark:hover:from-indigo-900/50 dark:hover:to-purple-900/50 rounded-xl transition-all overflow-hidden group"
                 aria-label="Change language"
               >
                 <ReactCountryFlag
                   countryCode={language === 'fr' ? 'FR' : 'GB'}
                   svg
                   style={{
-                    width: '1.5em',
-                    height: '1.5em',
+                    width: '1.25em',
+                    height: '1.25em',
                   }}
                   title={language === 'fr' ? 'Français' : 'English'}
                 />
-              </button>
-            </div>
-          </div>
+                <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 hidden sm:block">
+                  {language === 'fr' ? 'FR' : 'EN'}
+                </span>
+              </motion.button>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none"
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 space-y-2 pb-4">
-            <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block py-2 px-4 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors ${
-                      isActive(link.path) ? "bg-indigo-50 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-medium" : ""
-                    }`}
+              {/* Mobile Menu Button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="lg:hidden relative p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                aria-label="Toggle menu"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={isMenuOpen ? 'close' : 'open'}
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            
-            <div className="flex space-x-4 mt-4">
-              {/* Theme Toggle Mobile */}
-              <button
-                onClick={toggleTheme}
-                className="flex-1 flex items-center justify-center px-4 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === 'light' ? <FaMoon className="w-5 h-5" /> : <FaSun className="w-5 h-5" />}
-              </button>
-
-              {/* Language Switcher for Mobile */}
-              <button
-                onClick={toggleLanguage}
-                className="flex-1 flex items-center justify-center px-4 py-3 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 rounded-lg transition-colors"
-                aria-label="Change language"
-              >
-                <ReactCountryFlag
-                  countryCode={language === 'fr' ? 'FR' : 'GB'}
-                  svg
-                  style={{
-                    width: '2em',
-                    height: '2em',
-                  }}
-                  title={language === 'fr' ? 'Français' : 'English'}
-                />
-              </button>
+                    {isMenuOpen ? <HiX className="w-5 h-5" /> : <HiMenuAlt3 className="w-5 h-5" />}
+                  </motion.div>
+                </AnimatePresence>
+              </motion.button>
             </div>
           </div>
+        </nav>
+      </motion.header>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+            />
+
+            {/* Mobile Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl z-50 lg:hidden"
+            >
+              <div className="flex flex-col h-full">
+                {/* Mobile Menu Header */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+                  <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Menu
+                  </span>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                  >
+                    <HiX className="w-5 h-5" />
+                  </motion.button>
+                </div>
+
+                {/* Mobile Nav Links */}
+                <div className="flex-1 overflow-y-auto py-4 px-3">
+                  <div className="space-y-1">
+                    {navLinks.map((link, index) => {
+                      const Icon = link.icon;
+                      const active = isActive(link.path);
+                      return (
+                        <motion.div
+                          key={link.path}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <Link
+                            to={link.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                              active 
+                                ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg shadow-indigo-500/25" 
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            }`}
+                          >
+                            <Icon className="w-5 h-5" />
+                            <span className="font-medium">{link.name}</span>
+                            {active && (
+                              <div className="ml-auto w-2 h-2 bg-white rounded-full" />
+                            )}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Mobile Menu Footer */}
+                <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-3">
+                  {/* Theme & Language Row */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={toggleTheme}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                    >
+                      {theme === 'light' ? <FaMoon className="w-5 h-5" /> : <FaSun className="w-5 h-5 text-yellow-400" />}
+                      <span className="text-sm font-medium">
+                        {theme === 'light' ? 'Sombre' : 'Clair'}
+                      </span>
+                    </button>
+                    <button
+                      onClick={toggleLanguage}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-xl transition-colors"
+                    >
+                      <ReactCountryFlag
+                        countryCode={language === 'fr' ? 'FR' : 'GB'}
+                        svg
+                        style={{ width: '1.25em', height: '1.25em' }}
+                      />
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {language === 'fr' ? 'Français' : 'English'}
+                      </span>
+                    </button>
+                  </div>
+                  
+                  {/* Credits */}
+                  <div className="text-center text-xs text-gray-500 dark:text-gray-500">
+                    © 2024 csas_cheick
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
-      </nav>
-    </header>
+      </AnimatePresence>
+    </>
   );
 };
 

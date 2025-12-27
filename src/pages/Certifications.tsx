@@ -1,7 +1,35 @@
 import { FC, ReactElement, useState } from "react";
-import { FaLinux, FaShieldAlt, FaDatabase, FaCode, FaExternalLinkAlt, FaChevronDown, FaSyncAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaLinux, FaShieldAlt, FaDatabase, FaCode, FaExternalLinkAlt, FaChevronDown, FaCheckCircle, FaCalendarAlt, FaBuilding } from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi";
 import illustrationSucces from "../assets/illustration_succes.svg";
 import { useLanguage } from "../context/LanguageContext";
+import SEO from "../components/SEO";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }
+  }
+};
 
 interface Certification {
   date: string;
@@ -10,12 +38,14 @@ interface Certification {
   organization: string;
   verificationUrl: string;
   icon: ReactElement;
-  color: string;
+  gradientFrom: string;
+  gradientTo: string;
   description: string;
+  skills: string[];
 }
 
 const Certifications: FC = () => {
-  const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { t, language } = useLanguage();
 
   const scrollToCertifications = () => {
@@ -23,10 +53,6 @@ const Certifications: FC = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
-
-  const handleCardClick = (index: number) => {
-    setFlippedCard(flippedCard === index ? null : index);
   };
 
   const getCertificationsData = (): Certification[] => {
@@ -39,8 +65,10 @@ const Certifications: FC = () => {
           organization: "Linux Professional Institute",
           verificationUrl: "https://lpi.org/verify/LPI000653714/7k8c58pyyj",
           icon: <FaLinux />,
-          color: "bg-yellow-500",
+          gradientFrom: "from-yellow-400",
+          gradientTo: "to-orange-500",
           description: "This certification validates fundamental Linux skills, covering command line, file management, permissions and basic system administration.",
+          skills: ["Command Line", "File Systems", "Permissions", "Shell Scripting"]
         },
         {
           date: "April 2025",
@@ -49,8 +77,10 @@ const Certifications: FC = () => {
           organization: "Cisco Networking Academy",
           verificationUrl: "https://www.credly.com/badges/252c099a-810f-4354-b852-1e96de3839b4/public_url",
           icon: <FaShieldAlt />,
-          color: "bg-blue-500",
+          gradientFrom: "from-blue-400",
+          gradientTo: "to-cyan-500",
           description: "Comprehensive training on cybersecurity principles, common threats, data protection techniques and IT security best practices.",
+          skills: ["Network Security", "Threat Analysis", "Data Protection", "Security Practices"]
         },
         {
           date: "May 2025",
@@ -59,8 +89,10 @@ const Certifications: FC = () => {
           organization: "Cisco Networking Academy",
           verificationUrl: "https://www.credly.com/badges/0f9e39b0-fdeb-4603-b8a7-64850e04c42a/public_url",
           icon: <FaDatabase />,
-          color: "bg-green-500",
+          gradientFrom: "from-emerald-400",
+          gradientTo: "to-teal-500",
           description: "Learning fundamental data science concepts, including data analysis, visualization, statistics and introduction to machine learning.",
+          skills: ["Data Analysis", "Visualization", "Statistics", "Machine Learning"]
         },
         {
           date: "January 2025",
@@ -69,8 +101,10 @@ const Certifications: FC = () => {
           organization: "FreeCodeCamp & Microsoft",
           verificationUrl: "https://www.freecodecamp.org/certification/csas-cheick/foundational-c-sharp-with-microsoft",
           icon: <FaCode />,
-          color: "bg-purple-500",
+          gradientFrom: "from-purple-400",
+          gradientTo: "to-pink-500",
           description: "Mastery of C# language fundamentals, including syntax, data structures, object-oriented programming and .NET application development.",
+          skills: ["C# Syntax", "OOP", "Data Structures", ".NET Development"]
         },
       ];
     }
@@ -83,8 +117,10 @@ const Certifications: FC = () => {
         organization: "Linux Professional Institute",
         verificationUrl: "https://lpi.org/verify/LPI000653714/7k8c58pyyj",
         icon: <FaLinux />,
-        color: "bg-yellow-500",
+        gradientFrom: "from-yellow-400",
+        gradientTo: "to-orange-500",
         description: "Cette certification valide les compétences fondamentales en Linux, couvrant la ligne de commande, la gestion des fichiers, les permissions et l'administration système de base.",
+        skills: ["Ligne de commande", "Systèmes de fichiers", "Permissions", "Scripts Shell"]
       },
       {
         date: "Avril 2025",
@@ -93,8 +129,10 @@ const Certifications: FC = () => {
         organization: "Cisco Networking Academy",
         verificationUrl: "https://www.credly.com/badges/252c099a-810f-4354-b852-1e96de3839b4/public_url",
         icon: <FaShieldAlt />,
-        color: "bg-blue-500",
+        gradientFrom: "from-blue-400",
+        gradientTo: "to-cyan-500",
         description: "Formation complète sur les principes de la cybersécurité, les menaces courantes, les techniques de protection des données et les meilleures pratiques de sécurité informatique.",
+        skills: ["Sécurité réseau", "Analyse des menaces", "Protection des données", "Bonnes pratiques"]
       },
       {
         date: "Mai 2025",
@@ -103,8 +141,10 @@ const Certifications: FC = () => {
         organization: "Cisco Networking Academy",
         verificationUrl: "https://www.credly.com/badges/0f9e39b0-fdeb-4603-b8a7-64850e04c42a/public_url",
         icon: <FaDatabase />,
-        color: "bg-green-500",
+        gradientFrom: "from-emerald-400",
+        gradientTo: "to-teal-500",
         description: "Apprentissage des concepts fondamentaux de la science des données, incluant l'analyse de données, la visualisation, les statistiques et l'introduction au machine learning.",
+        skills: ["Analyse de données", "Visualisation", "Statistiques", "Machine Learning"]
       },
       {
         date: "Janvier 2025",
@@ -113,8 +153,10 @@ const Certifications: FC = () => {
         organization: "FreeCodeCamp & Microsoft",
         verificationUrl: "https://www.freecodecamp.org/certification/csas-cheick/foundational-c-sharp-with-microsoft",
         icon: <FaCode />,
-        color: "bg-purple-500",
+        gradientFrom: "from-purple-400",
+        gradientTo: "to-pink-500",
         description: "Maîtrise des fondamentaux du langage C#, incluant la syntaxe, les structures de données, la programmation orientée objet et le développement d'applications .NET.",
+        skills: ["Syntaxe C#", "POO", "Structures de données", "Développement .NET"]
       },
     ];
   };
@@ -122,172 +164,236 @@ const Certifications: FC = () => {
   const certifications = getCertificationsData();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      {/* Section Hero */}
-      <div className="flex items-center justify-center px-4 py-6 md:py-10 relative">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
-            {/* Section gauche - Texte */}
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3">
-                {t.certifications.title} <span className="text-indigo-600 dark:text-indigo-400">{t.certifications.titleHighlight}</span>
-              </h1>
-              <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-2 md:mb-3">
-                {t.certifications.subtitle}
-              </p>
-              <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-4">
-                {t.certifications.subtitle}
-              </p>
-              
-              {/* Scroll indicator */}
-              <button
-                onClick={scrollToCertifications}
-                className="animate-bounce mt-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors cursor-pointer"
-                aria-label={language === 'fr' ? "Défiler vers les certifications" : "Scroll to certifications"}
+    <>
+      <SEO 
+        title={language === 'fr' ? "Certifications" : "Certifications"}
+        description={language === 'fr' 
+          ? "Mes certifications professionnelles - LPIC-1 Linux, Cybersécurité Cisco, Data Science et C# Microsoft."
+          : "My professional certifications - LPIC-1 Linux, Cisco Cybersecurity, Data Science and Microsoft C#."}
+      />
+      <div className="min-h-screen transition-colors duration-300">
+        {/* Section Hero */}
+        <section className="flex items-center justify-center px-4 py-6 md:py-10 relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+          <div className="container mx-auto max-w-6xl">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="grid md:grid-cols-2 gap-4 md:gap-8 items-center"
+            >
+              {/* Section gauche - Texte */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <FaChevronDown className="text-2xl md:text-3xl" />
-              </button>
-            </div>
-
-            {/* Section droite - Image */}
-            <div className="flex justify-center mt-3 md:mt-0">
-              <div className="relative">
-                <img 
-                  src={illustrationSucces} 
-                  alt="Illustration succès" 
-                  className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs h-auto animate-float"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Section Certifications */}
-      <div id="certifications-section" className="bg-gray-50 dark:bg-gray-900 py-8 md:py-12 px-4 transition-colors duration-300">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3 text-center">
-            {t.certifications.sectionTitle}
-          </h2>
-          <p className="text-center text-sm md:text-base text-gray-600 dark:text-gray-400 mb-6 md:mb-8 max-w-2xl mx-auto">
-            Chaque certification représente un engagement envers l'excellence et l'apprentissage continu
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-            {certifications.map((cert, index) => (
-              <div
-                key={index}
-                className="group relative h-64 md:h-80 lg:h-96 perspective-1000 cursor-pointer"
-                onClick={() => handleCardClick(index)}
-              >
-                <div
-                  className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${
-                    flippedCard === index ? 'rotate-y-180' : ''
-                  }`}
+                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3">
+                  {t.certifications.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{t.certifications.titleHighlight}</span>
+                </h1>
+                <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-2 md:mb-3">
+                  {t.certifications.subtitle}
+                </p>
+                <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-4">
+                  {language === 'fr' 
+                    ? "Chaque certification représente un engagement envers l'excellence et l'apprentissage continu."
+                    : "Each certification represents a commitment to excellence and continuous learning."}
+                </p>
+                
+                {/* Scroll indicator */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onClick={scrollToCertifications}
+                  className="animate-bounce mt-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+                  aria-label={language === 'fr' ? "Défiler vers les certifications" : "Scroll to certifications"}
                 >
-                  {/* Face avant */}
-                  <div
-                    className="absolute w-full h-full backface-hidden bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border-2 border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-500"
-                  >
-                    {/* Colored top bar */}
-                    <div className={`h-1.5 md:h-2 ${cert.color}`}></div>
-                    
-                    <div className="p-3 md:p-4 lg:p-6">
-                      <div className="flex items-start gap-2 md:gap-3 lg:gap-4">
-                        {/* Icon with animation */}
-                        <div className={`${cert.color} text-white p-2 md:p-3 lg:p-4 rounded-lg md:rounded-xl text-xl md:text-2xl lg:text-3xl flex-shrink-0 shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                          {cert.icon}
-                        </div>
+                  <FaChevronDown className="text-2xl md:text-3xl" />
+                </motion.button>
+              </motion.div>
 
-                        {/* Content */}
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1 md:mb-2">
-                            <span className="inline-block px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
-                              {cert.date}
-                            </span>
-                          </div>
-                          
-                          <h3 className="text-base md:text-xl lg:text-2xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
+              {/* Section droite - Image */}
+              <motion.div 
+                className="flex justify-center mt-3 md:mt-0"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="relative">
+                  <img 
+                    src={illustrationSucces} 
+                    alt="Illustration succès" 
+                    className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs h-auto animate-float"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Section Certifications */}
+        <div id="certifications-section" className="bg-gray-50 dark:bg-gray-900 py-12 md:py-16 px-4 transition-colors duration-300">
+          <div className="container mx-auto max-w-6xl">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-4">
+                <HiSparkles className="text-lg" />
+                <span>{language === 'fr' ? `${certifications.length} Certifications obtenues` : `${certifications.length} Certifications earned`}</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-3">
+                {t.certifications.sectionTitle}
+              </h2>
+              <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                {language === 'fr' 
+                  ? "Des formations reconnues par l'industrie pour valider mes compétences techniques"
+                  : "Industry-recognized training to validate my technical skills"}
+              </p>
+            </motion.div>
+
+            {/* Certifications Grid */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-6"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {certifications.map((cert, index) => (
+                <motion.div
+                  key={index}
+                  variants={cardVariants}
+                  className="group relative"
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  {/* Card */}
+                  <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
+                    {/* Top Gradient Bar */}
+                    <div className={`h-1.5 bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo}`} />
+                    
+                    <div className="p-6">
+                      {/* Header */}
+                      <div className="flex items-start gap-4 mb-4">
+                        {/* Icon */}
+                        <motion.div 
+                          className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${cert.gradientFrom} ${cert.gradientTo} flex items-center justify-center text-white text-2xl shadow-lg`}
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          {cert.icon}
+                        </motion.div>
+                        
+                        {/* Title & Org */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                             {cert.title}
                           </h3>
-                          
-                          <p className="text-gray-700 dark:text-gray-300 font-medium mb-1 md:mb-2 text-xs md:text-sm lg:text-base leading-tight">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                             {cert.subtitle}
                           </p>
-                          
-                          <p className="text-gray-500 dark:text-gray-400 text-[10px] md:text-xs lg:text-sm mb-2 md:mb-3 flex items-center gap-1 md:gap-2">
-                            <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-indigo-400 rounded-full"></span>
-                            {cert.organization}
-                          </p>
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Animation de reflet au survol */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 group-hover:animate-shimmer pointer-events-none"></div>
-
-                    {/* Texte en bas avec animation - toujours visible sur mobile/tablette, au survol sur desktop */}
-                    <div className="absolute bottom-2 md:bottom-3 lg:bottom-4 left-0 right-0 flex items-center justify-center gap-1.5 md:gap-2 text-indigo-600 dark:text-indigo-400 text-[10px] md:text-xs lg:text-sm font-medium opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="relative">
-                        <FaSyncAlt className="text-xs md:text-sm lg:text-base animate-spin-slow" />
-                        <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-75"></div>
-                      </div>
-                      <span className="animate-pulse">
-                        {language === 'fr' ? "Cliquez pour voir les détails" : "Click to see details"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Face arrière */}
-                  <div
-                    className="absolute w-full h-full backface-hidden bg-gradient-to-br from-indigo-600 to-indigo-800 dark:from-indigo-800 dark:to-indigo-900 rounded-xl shadow-lg p-3 md:p-4 lg:p-6 flex flex-col justify-between rotate-y-180"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 lg:mb-4">
-                        <div className="bg-white/20 p-1.5 md:p-2 lg:p-3 rounded-lg text-white text-lg md:text-xl lg:text-2xl">
-                          {cert.icon}
+                        
+                        {/* Date Badge */}
+                        <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs font-semibold flex items-center gap-1.5`}>
+                          <FaCalendarAlt className="text-xs" />
+                          {cert.date}
                         </div>
-                        <h3 className="text-base md:text-xl lg:text-2xl font-bold text-white leading-tight">{cert.title}</h3>
                       </div>
                       
-                      <p className="text-white/90 text-xs md:text-sm lg:text-base leading-relaxed mb-3 md:mb-4 lg:mb-6">
-                        {cert.description}
-                      </p>
-
-                      <div className="space-y-1 md:space-y-2 text-white/80 text-[10px] md:text-xs lg:text-sm">
-                        <p><strong>Date :</strong> {cert.date}</p>
-                        <p><strong>Organisation :</strong> {cert.organization}</p>
+                      {/* Organization */}
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-4">
+                        <FaBuilding className="text-xs" />
+                        <span>{cert.organization}</span>
+                        <FaCheckCircle className="text-green-500 ml-auto" />
+                        <span className="text-green-600 dark:text-green-400 text-xs font-medium">
+                          {language === 'fr' ? "Vérifié" : "Verified"}
+                        </span>
                       </div>
-                    </div>
-
-                    <div className="space-y-2 md:space-y-3">
-                      <a
+                      
+                      {/* Description - Visible on hover */}
+                      <motion.div
+                        initial={false}
+                        animate={{ 
+                          height: hoveredCard === index ? 'auto' : 0,
+                          opacity: hoveredCard === index ? 1 : 0
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                          {cert.description}
+                        </p>
+                      </motion.div>
+                      
+                      {/* Skills Tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {cert.skills.map((skill, skillIndex) => (
+                          <span 
+                            key={skillIndex}
+                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      {/* Verify Button */}
+                      <motion.a
                         href={cert.verificationUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="block w-full text-center px-3 md:px-4 py-2 md:py-3 text-xs md:text-sm lg:text-base bg-white dark:bg-gray-200 text-indigo-600 dark:text-indigo-800 font-medium rounded-lg hover:bg-gray-100 transition-colors shadow-md"
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-sm font-semibold hover:shadow-lg transition-all duration-300`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        <span className="flex items-center justify-center gap-1.5 md:gap-2">
-                          {language === 'fr' ? "Vérifier la certification" : "Verify certification"}
-                          <FaExternalLinkAlt className="text-[10px] md:text-xs" />
-                        </span>
-                      </a>
-                      <div className="flex items-center justify-center gap-1.5 md:gap-2 text-white/70 text-[10px] md:text-xs">
-                        <FaSyncAlt className="text-xs md:text-sm" />
-                        <span>{language === 'fr' ? "Cliquez pour retourner" : "Click to flip back"}</span>
-                      </div>
+                        <FaCheckCircle />
+                        {language === 'fr' ? "Vérifier le certificat" : "Verify certificate"}
+                        <FaExternalLinkAlt className="text-xs" />
+                      </motion.a>
                     </div>
                   </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Bottom Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-12 text-center"
+            >
+              <div className="inline-flex flex-col sm:flex-row items-center gap-4 px-6 py-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700">
+                <div className="flex -space-x-3">
+                  {certifications.map((cert, i) => (
+                    <motion.div 
+                      key={i} 
+                      className={`w-10 h-10 rounded-full bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} flex items-center justify-center text-white text-sm border-2 border-white dark:border-gray-800`}
+                      whileHover={{ scale: 1.2, zIndex: 10 }}
+                    >
+                      {cert.icon}
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="text-center sm:text-left">
+                  <p className="text-sm font-semibold text-gray-800 dark:text-white">
+                    {language === 'fr' ? "Apprentissage continu" : "Continuous Learning"}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {language === 'fr' ? "Nouvelles certifications en préparation..." : "New certifications in progress..."}
+                  </p>
                 </div>
               </div>
-            ))}
+            </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Certifications;
-

@@ -1,10 +1,12 @@
 import { FC, useState } from "react";
 import { FaDownload, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Document, Page, pdfjs } from 'react-pdf';
+import { motion } from "framer-motion";
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import illustrationCV from "../assets/illustration_cv.svg";
 import { useLanguage } from "../context/LanguageContext";
+import SEO from "../components/SEO";
 
 // Configuration de PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -35,28 +37,60 @@ const Resume: FC = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
+    <>
+      <SEO 
+        title={language === 'fr' ? "CV - Mon Parcours Professionnel" : "Resume - My Professional Journey"}
+        description={language === 'fr' 
+          ? "Consultez et téléchargez mon CV. Découvrez mon parcours professionnel, mes compétences techniques et mes expériences en développement Full Stack."
+          : "View and download my resume. Discover my professional journey, technical skills, and experiences in Full Stack development."}
+        keywords={language === 'fr' 
+          ? "CV, curriculum vitae, parcours professionnel, développeur, Full Stack"
+          : "resume, CV, professional journey, developer, Full Stack"}
+      />
+      <div className="min-h-screen transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center px-4 py-6 md:py-10 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+      <motion.section 
+        className="relative flex items-center justify-center px-4 py-6 md:py-10 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 gap-4 md:gap-8 items-center"
+          >
             {/* Texte à gauche */}
-            <div className="space-y-2 md:space-y-3">
+            <motion.div 
+              className="space-y-2 md:space-y-3"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white">
-                {t.resume.title} <span className="text-indigo-600 dark:text-indigo-400">{t.resume.titleHighlight}</span>
+                {t.resume.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{t.resume.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
                 {t.resume.subtitle}
               </p>
+              <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400">
+                {language === 'fr' 
+                  ? "Téléchargez mon CV pour découvrir mon parcours détaillé et mes réalisations."
+                  : "Download my resume to discover my detailed journey and achievements."}
+              </p>
               <div className="flex flex-wrap gap-2 md:gap-3 pt-2">
-                <button
+                <motion.button
                   onClick={handleDownload}
-                  className="flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm md:text-base bg-indigo-600 dark:bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  className="flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 text-sm md:text-base bg-indigo-600 dark:bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FaDownload className="text-base md:text-lg" />
                   {t.resume.download}
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={() => {
                     const element = document.getElementById('cv-viewer');
                     if (element) {
@@ -64,26 +98,40 @@ const Resume: FC = () => {
                     }
                   }}
                   className="px-4 md:px-5 py-2 md:py-2.5 text-sm md:text-base border-2 border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 font-medium rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-800 transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {t.resume.view}
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Illustration à droite */}
-            <div className="flex justify-center mt-3 md:mt-0">
+            <motion.div 
+              className="flex justify-center mt-3 md:mt-0"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               <img 
                 src={illustrationCV} 
                 alt="CV Illustration" 
                 className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs animate-float"
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CV Viewer Section */}
-      <section id="cv-viewer" className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <motion.section 
+        id="cv-viewer" 
+        className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container mx-auto max-w-4xl">
         {/* Header avec bouton de téléchargement */}
         <div className="flex flex-col items-center mb-4 md:mb-6 gap-2 md:gap-3">
@@ -96,7 +144,13 @@ const Resume: FC = () => {
         </div>
 
         {/* Aperçu du PDF */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden p-8 transition-colors duration-300">
+        <motion.div 
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden p-8 transition-colors duration-300"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="flex flex-col items-center">
             <Document
               file={cvFile}
@@ -142,21 +196,30 @@ const Resume: FC = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Bouton de téléchargement en bas */}
-        <div className="flex justify-center mt-8">
-          <button
+        <motion.div 
+          className="flex justify-center mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.button
             onClick={handleDownload}
-            className="flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            className="flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <FaDownload className="text-xl animate-bounce" />
             {language === 'fr' ? "Télécharger le CV au format PDF" : "Download Resume as PDF"}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
     </div>
+    </>
   );
 };
 

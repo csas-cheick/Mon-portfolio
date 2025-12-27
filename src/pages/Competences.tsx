@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { motion } from "framer-motion";
 import { 
   FaChevronDown, 
   FaReact, 
@@ -35,6 +36,7 @@ import { TbBrain } from "react-icons/tb";
 import { HiGlobeAlt } from "react-icons/hi";
 import illustrationCompetences from "../assets/illustration_competences.svg";
 import { useLanguage } from "../context/LanguageContext";
+import SEO from "../components/SEO";
 
 interface Skill {
   name: string;
@@ -164,115 +166,164 @@ const Competences: FC = () => {
   ];
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
-      {/* Hero Section */}
-      <section className="relative flex items-center justify-center px-4 py-6 md:py-10 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
-            {/* Texte à gauche */}
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3">
-                {t.skills.title} <span className="text-indigo-600 dark:text-indigo-400">{t.skills.titleHighlight}</span>
-              </h1>
-              <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-2 md:mb-3">
-                {t.skills.subtitle}
-              </p>
-              <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-4">
-                {t.skills.description}
-              </p>
-              
-              {/* Scroll indicator */}
-              <button
-                onClick={scrollToSkills}
-                className="animate-bounce mt-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors cursor-pointer"
-                aria-label={language === 'fr' ? "Défiler vers les compétences" : "Scroll to skills"}
+    <>
+      <SEO 
+        title={language === 'fr' ? "Compétences" : "Skills"}
+        description={language === 'fr' 
+          ? "Découvrez mes compétences en développement web, mobile, IA, bases de données et outils DevOps."
+          : "Discover my skills in web development, mobile, AI, databases and DevOps tools."}
+      />
+      <div className="min-h-screen transition-colors duration-300">
+        {/* Hero Section */}
+        <section className="relative flex items-center justify-center px-4 py-6 md:py-10 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+          <div className="container mx-auto max-w-6xl">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="grid md:grid-cols-2 gap-4 md:gap-8 items-center"
+            >
+              {/* Texte à gauche */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <FaChevronDown className="text-2xl md:text-3xl" />
-              </button>
-            </div>
-
-            {/* Illustration à droite */}
-            <div className="flex justify-center mt-3 md:mt-0">
-              <img 
-                src={illustrationCompetences} 
-                alt="Illustration compétences" 
-                className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs h-auto animate-float"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills-section" className="py-12 md:py-16 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-white mb-3 md:mb-4">
-            {t.skills.sectionTitle}
-          </h2>
-          <p className="text-center text-sm md:text-base text-gray-600 dark:text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
-            {t.skills.description}
-          </p>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {skillCategories.map((category, categoryIndex) => (
-              <div 
-                key={categoryIndex}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Header */}
-                <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-indigo-100 dark:border-gray-700">
-                  <div className="bg-indigo-50 dark:bg-indigo-900/30 p-2 md:p-3 rounded-lg flex-shrink-0">
-                    <div className="text-2xl md:text-3xl">
-                      {category.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-base md:text-xl font-bold text-gray-800 dark:text-white leading-tight">
-                    {category.title}
-                  </h3>
-                </div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3">
+                  {t.skills.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{t.skills.titleHighlight}</span>
+                </h1>
+                <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-2 md:mb-3">
+                  {t.skills.subtitle}
+                </p>
+                <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-3 md:mb-4">
+                  {t.skills.description}
+                </p>
                 
-                {/* Description */}
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 md:mb-4 leading-relaxed">
-                  {category.description}
-                </p>
+                {/* Scroll indicator */}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onClick={scrollToSkills}
+                  className="animate-bounce mt-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+                  aria-label={language === 'fr' ? "Défiler vers les compétences" : "Scroll to skills"}
+                >
+                  <FaChevronDown className="text-2xl md:text-3xl" />
+                </motion.button>
+              </motion.div>
 
-                {/* Skills Grid */}
-                <div className="grid grid-cols-2 gap-2 md:gap-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div 
-                      key={skillIndex} 
-                      className="flex items-center gap-1.5 md:gap-2 p-1.5 md:p-2 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-600 transition-colors group"
-                    >
-                      <div className="text-lg md:text-2xl group-hover:scale-110 transition-transform flex-shrink-0">
-                        {skill.icon}
+              {/* Illustration à droite */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex justify-center mt-3 md:mt-0"
+              >
+                <motion.img 
+                  animate={{ y: [-10, 10, -10] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  src={illustrationCompetences} 
+                  alt="Illustration compétences" 
+                  className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs h-auto"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills-section" className="py-12 md:py-16 px-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+          <div className="container mx-auto max-w-7xl">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-white mb-3 md:mb-4"
+            >
+              {t.skills.sectionTitle}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-center text-sm md:text-base text-gray-600 dark:text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4"
+            >
+              {t.skills.description}
+            </motion.p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {skillCategories.map((category, categoryIndex) => (
+                <motion.div 
+                  key={categoryIndex}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: categoryIndex * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 md:p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+                >
+                  {/* Header */}
+                  <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-indigo-100 dark:border-gray-700">
+                    <div className="bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 p-2 md:p-3 rounded-xl flex-shrink-0">
+                      <div className="text-2xl md:text-3xl">
+                        {category.icon}
                       </div>
-                      <span className="text-[10px] md:text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 leading-tight">
-                        {skill.name}
-                      </span>
                     </div>
-                  ))}
+                    <h3 className="text-base md:text-xl font-bold text-gray-800 dark:text-white leading-tight">
+                      {category.title}
+                    </h3>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-3 md:mb-4 leading-relaxed">
+                    {category.description}
+                  </p>
+
+                  {/* Skills Grid */}
+                  <div className="grid grid-cols-2 gap-2 md:gap-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <motion.div 
+                        key={skillIndex}
+                        whileHover={{ scale: 1.02 }}
+                        className="flex items-center gap-1.5 md:gap-2 p-1.5 md:p-2 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-gray-600 transition-colors group border border-transparent hover:border-indigo-200 dark:hover:border-indigo-500/30"
+                      >
+                        <div className="text-lg md:text-2xl group-hover:scale-110 transition-transform flex-shrink-0">
+                          {skill.icon}
+                        </div>
+                        <span className="text-[10px] md:text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 leading-tight">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Note en cours d'approfondissement */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-8 md:mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-4 md:p-6 border-l-4 border-indigo-600 dark:border-indigo-400"
+            >
+              <div className="flex items-start gap-2 md:gap-3">
+                <span className="text-2xl md:text-3xl flex-shrink-0">📚</span>
+                <div>
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-1 md:mb-2 text-sm md:text-base">
+                    {language === 'fr' ? "En cours d'approfondissement" : "Currently Deepening"}
+                  </h3>
+                  <p className="text-xs md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {language === 'fr' 
+                      ? "Je continue à développer mes compétences en Intelligence Artificielle, Cloud Computing et Architecture logicielle avancée à travers des projets personnels et des formations continues."
+                      : "I continue to develop my skills in Artificial Intelligence, Cloud Computing and Advanced Software Architecture through personal projects and continuous learning."}
+                  </p>
                 </div>
               </div>
-            ))}
+            </motion.div>
           </div>
-
-          {/* Note en cours d'approfondissement */}
-          <div className="mt-8 md:mt-12 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 md:p-6 border-l-4 border-indigo-600 dark:border-indigo-400">
-            <div className="flex items-start gap-2 md:gap-3">
-              <span className="text-2xl md:text-3xl flex-shrink-0">📚</span>
-              <div>
-                <h3 className="font-bold text-gray-800 dark:text-white mb-1 md:mb-2 text-sm md:text-base">En cours d'approfondissement</h3>
-                <p className="text-xs md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Je continue à développer mes compétences en <strong>Intelligence Artificielle</strong>, 
-                  <strong> Cloud Computing</strong> et <strong> Architecture logicielle avancée</strong> à travers 
-                  des projets personnels et des formations continues.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 

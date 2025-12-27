@@ -1,8 +1,10 @@
 import { FC, useState } from "react";
+import { motion } from "framer-motion";
 import { FaChevronDown, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter, FaPaperPlane } from "react-icons/fa";
 import illustrationContact from "../assets/illustration_contact.svg";
 import emailjs from '@emailjs/browser';
 import { useLanguage } from "../context/LanguageContext";
+import SEO from "../components/SEO";
 
 const Contact: FC = () => {
   const { t, language } = useLanguage();
@@ -67,15 +69,31 @@ const Contact: FC = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
+    <>
+      <SEO 
+        title="Contact"
+        description={language === 'fr' 
+          ? "Contactez-moi pour vos projets de développement web, mobile ou IA. Je suis disponible pour des collaborations et opportunités."
+          : "Contact me for your web, mobile or AI development projects. I am available for collaborations and opportunities."}
+      />
+      <div className="min-h-screen transition-colors duration-300">
       {/* Hero Section */}
       <section className="relative flex items-center justify-center px-4 py-4 md:py-6 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-3 md:gap-6 items-center">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 gap-3 md:gap-6 items-center"
+          >
             {/* Texte à gauche */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 dark:text-white mb-2 md:mb-3">
-                {t.contact.title} <span className="text-indigo-600 dark:text-indigo-400">{t.contact.titleHighlight}</span>
+                {t.contact.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{t.contact.titleHighlight}</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-2 md:mb-3">
                 {t.contact.subtitle}
@@ -88,7 +106,13 @@ const Contact: FC = () => {
 
               {/* Contact Info Cards */}
               <div className="space-y-2 md:space-y-3 mb-3 md:mb-4">
-                <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <motion.div 
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                  whileHover={{ scale: 1.02 }}
+                >
                   <div className="bg-indigo-100 dark:bg-indigo-900/30 p-1.5 md:p-2 rounded-full">
                     <FaEnvelope className="text-indigo-600 dark:text-indigo-400 text-sm md:text-base" />
                   </div>
@@ -98,8 +122,14 @@ const Contact: FC = () => {
                       csas.cheick@gmail.com
                     </a>
                   </div>
-                </div>
-                <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                </motion.div>
+                <motion.div 
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                  whileHover={{ scale: 1.02 }}
+                >
                   <div className="bg-indigo-100 dark:bg-indigo-900/30 p-1.5 md:p-2 rounded-full">
                     <FaPhone className="text-indigo-600 dark:text-indigo-400 text-sm md:text-base" />
                   </div>
@@ -109,9 +139,15 @@ const Contact: FC = () => {
                       +216 53 414 178
                     </a>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <motion.div 
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                >
                   <div className="bg-indigo-100 dark:bg-indigo-900/30 p-1.5 md:p-2 rounded-full">
                     <FaMapMarkerAlt className="text-indigo-600 dark:text-indigo-400 text-sm md:text-base" />
                   </div>
@@ -121,28 +157,34 @@ const Contact: FC = () => {
                       {language === 'fr' ? "Monastir, Tunisie" : "Monastir, Tunisia"}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
               
               {/* Scroll indicator */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
                 onClick={scrollToForm}
                 className="animate-bounce mt-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors cursor-pointer"
                 aria-label={language === 'fr' ? "Défiler vers le formulaire" : "Scroll to form"}
               >
                 <FaChevronDown className="text-xl md:text-2xl" />
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
             {/* Illustration à droite */}
-            <div className="flex justify-center mt-2 md:mt-0">
+            <motion.div 
+              className="flex justify-center mt-2 md:mt-0"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <img 
                 src={illustrationContact} 
                 alt="Illustration contact" 
                 className="w-full max-w-[120px] sm:max-w-[160px] md:max-w-xs h-auto animate-float"
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -309,6 +351,7 @@ const Contact: FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
