@@ -1,4 +1,4 @@
-import { FC, useState, ReactNode } from "react";
+import { FC, useState, useEffect, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaChevronDown, 
@@ -75,8 +75,14 @@ const statsVariants = {
 const Projets: FC = () => {
   // State
   const { t, language } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState(language === 'fr' ? "Tous" : "All");
+  const allLabel = language === 'fr' ? "Tous" : "All";
+  const [selectedCategory, setSelectedCategory] = useState(allLabel);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+
+  // Reset category when language changes
+  useEffect(() => {
+    setSelectedCategory(language === 'fr' ? "Tous" : "All");
+  }, [language]);
 
   // Category icons mapping
   const categoryIcons: Record<string, ReactNode> = {
@@ -252,7 +258,6 @@ const Projets: FC = () => {
   };
 
   // Computed values
-  const allLabel = language === 'fr' ? "Tous" : "All";
   const categories = [allLabel, ...new Set(PROJECTS_DATA.map(p => p.category))];
   const filteredProjects = selectedCategory === allLabel 
     ? PROJECTS_DATA 
@@ -424,7 +429,8 @@ const Projets: FC = () => {
             layout
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             className="grid md:grid-cols-2 gap-8"
           >
             <AnimatePresence mode="popLayout">
