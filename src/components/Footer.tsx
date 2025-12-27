@@ -76,7 +76,7 @@ const Footer: FC = () => {
               {language === 'fr' ? "Me suivre" : "Follow Me"}
             </h3>
             <div className="flex gap-3">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social) => (
                 <motion.a
                   key={social.href}
                   href={social.href}

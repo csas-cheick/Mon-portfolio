@@ -7,7 +7,6 @@ import illustrationPerso from "./assets/illustration_perso.svg";
 import { useLanguage } from "./context/LanguageContext";
 import SEO from "./components/SEO";
 import TypeWriter from "./components/TypeWriter";
-import GlassCard from "./components/GlassCard";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,7 +25,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: "easeOut" as const,
     },
   },
 };
