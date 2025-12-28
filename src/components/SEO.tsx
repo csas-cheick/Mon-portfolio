@@ -15,7 +15,7 @@ const SEO: FC<SEOProps> = ({
   description,
   keywords,
   image = "/og-image.png",
-  url = "https://csas-cheick.dev",
+  url = "https://csas-cheick.vercel.app",
 }) => {
   const { language } = useLanguage();
   

@@ -1,0 +1,6 @@
+# Robots.txt for csas-cheick portfolio
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://csas-cheick.vercel.app/sitemap.xml
