@@ -3,8 +3,30 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
-import ReactCountryFlag from "react-country-flag";
 import { FaSun, FaMoon } from "react-icons/fa";
+
+// Composant drapeau avec SVG inline pour éviter les requêtes CDN externes
+const FlagIcon: FC<{ countryCode: string; className?: string }> = ({ countryCode, className = "" }) => {
+  if (countryCode === 'FR') {
+    return (
+      <svg className={`w-5 h-5 rounded-sm ${className}`} viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+        <rect width="213.3" height="480" fill="#002654"/>
+        <rect x="213.3" width="213.4" height="480" fill="#fff"/>
+        <rect x="426.7" width="213.3" height="480" fill="#ce1126"/>
+      </svg>
+    );
+  }
+  // GB flag
+  return (
+    <svg className={`w-5 h-5 rounded-sm ${className}`} viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+      <rect width="640" height="480" fill="#012169"/>
+      <path d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 302 81 480H0v-60l239-178L0 64V0h75z" fill="#fff"/>
+      <path d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z" fill="#C8102E"/>
+      <path d="M241 0v480h160V0H241zM0 160v160h640V160H0z" fill="#fff"/>
+      <path d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z" fill="#C8102E"/>
+    </svg>
+  );
+};
 import { 
   HiHome, 
   HiCode, 
@@ -160,15 +182,7 @@ const Header: FC = () => {
                 className="relative flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 hover:from-indigo-100 hover:to-purple-100 dark:hover:from-indigo-900/50 dark:hover:to-purple-900/50 rounded-xl transition-all overflow-hidden group"
                 aria-label="Change language"
               >
-                <ReactCountryFlag
-                  countryCode={language === 'fr' ? 'FR' : 'GB'}
-                  svg
-                  style={{
-                    width: '1.25em',
-                    height: '1.25em',
-                  }}
-                  title={language === 'fr' ? 'Français' : 'English'}
-                />
+                <FlagIcon countryCode={language === 'fr' ? 'FR' : 'GB'} />
                 <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 hidden sm:block">
                   {language === 'fr' ? 'FR' : 'EN'}
                 </span>
@@ -286,11 +300,7 @@ const Header: FC = () => {
                       onClick={toggleLanguage}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-xl transition-colors"
                     >
-                      <ReactCountryFlag
-                        countryCode={language === 'fr' ? 'FR' : 'GB'}
-                        svg
-                        style={{ width: '1.25em', height: '1.25em' }}
-                      />
+                      <FlagIcon countryCode={language === 'fr' ? 'FR' : 'GB'} />
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                         {language === 'fr' ? 'Français' : 'English'}
                       </span>
