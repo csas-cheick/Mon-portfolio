@@ -351,38 +351,38 @@ const Projets: FC = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap justify-center gap-4 md:gap-8 mt-8"
+                className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8"
               >
                 <motion.div 
                   variants={statsVariants}
-                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl text-white shadow-lg"
+                  className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl sm:rounded-2xl text-white shadow-lg"
                 >
-                  <FaRocket className="text-2xl" />
+                  <FaRocket className="text-base sm:text-lg md:text-2xl" />
                   <div className="text-left">
-                    <div className="text-2xl font-bold">{PROJECTS_DATA.length}</div>
-                    <div className="text-xs opacity-90">{language === 'fr' ? 'Projets' : 'Projects'}</div>
+                    <div className="text-base sm:text-lg md:text-2xl font-bold">{PROJECTS_DATA.length}</div>
+                    <div className="text-[10px] sm:text-xs opacity-90">{language === 'fr' ? 'Projets' : 'Projects'}</div>
                   </div>
                 </motion.div>
                 
                 <motion.div 
                   variants={statsVariants}
-                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl text-white shadow-lg"
+                  className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl sm:rounded-2xl text-white shadow-lg"
                 >
-                  <FaCode className="text-2xl" />
+                  <FaCode className="text-base sm:text-lg md:text-2xl" />
                   <div className="text-left">
-                    <div className="text-2xl font-bold">{new Set(PROJECTS_DATA.flatMap(p => p.technologies.map(t => t.name))).size}+</div>
-                    <div className="text-xs opacity-90">{language === 'fr' ? 'Technologies' : 'Technologies'}</div>
+                    <div className="text-base sm:text-lg md:text-2xl font-bold">{new Set(PROJECTS_DATA.flatMap(p => p.technologies.map(t => t.name))).size}+</div>
+                    <div className="text-[10px] sm:text-xs opacity-90">{language === 'fr' ? 'Technologies' : 'Technologies'}</div>
                   </div>
                 </motion.div>
                 
                 <motion.div 
                   variants={statsVariants}
-                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl text-white shadow-lg"
+                  className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-6 py-2 sm:py-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl sm:rounded-2xl text-white shadow-lg"
                 >
-                  <FaStar className="text-2xl" />
+                  <FaStar className="text-base sm:text-lg md:text-2xl" />
                   <div className="text-left">
-                    <div className="text-2xl font-bold">{categories.length - 1}</div>
-                    <div className="text-xs opacity-90">{language === 'fr' ? 'Catégories' : 'Categories'}</div>
+                    <div className="text-base sm:text-lg md:text-2xl font-bold">{categories.length - 1}</div>
+                    <div className="text-[10px] sm:text-xs opacity-90">{language === 'fr' ? 'Catégories' : 'Categories'}</div>
                   </div>
                 </motion.div>
               </motion.div>
@@ -394,7 +394,7 @@ const Projets: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="flex flex-wrap justify-center gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12"
           >
             {categories.map((category, index) => (
               <motion.button
@@ -405,15 +405,15 @@ const Projets: FC = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(category)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm md:text-base font-medium transition-all duration-300 ${
                   selectedCategory === category
                     ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30"
                     : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500"
                 }`}
               >
-                {categoryIcons[category]}
+                <span className="text-sm sm:text-base md:text-lg">{categoryIcons[category]}</span>
                 {category}
-                <span className={`ml-1 px-2 py-0.5 text-xs rounded-full ${
+                <span className={`ml-0.5 sm:ml-1 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs rounded-full ${
                   selectedCategory === category
                     ? "bg-white/20"
                     : "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400"
@@ -480,7 +480,7 @@ const Projets: FC = () => {
                       {project.category}
                     </motion.span>
 
-                    {/* Quick Action Buttons on Hover */}
+                    {/* Quick Action Buttons on Hover - Hidden on mobile, shown on hover for desktop */}
                     <motion.div 
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ 
@@ -488,7 +488,7 @@ const Projets: FC = () => {
                         opacity: hoveredProject === project.title ? 1 : 0 
                       }}
                       transition={{ duration: 0.3 }}
-                      className="absolute bottom-4 left-4 right-4 flex gap-3"
+                      className="absolute bottom-4 left-4 right-4 hidden md:flex gap-3"
                     >
                       {project.githubUrl && (
                         <a
@@ -518,7 +518,7 @@ const Projets: FC = () => {
                   </div>
 
                   {/* Project Info - Enhanced */}
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     {/* Title with Animated Underline */}
                     <div className="relative inline-block mb-3">
                       <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-purple-600 transition-all duration-300">
@@ -545,7 +545,7 @@ const Projets: FC = () => {
                     </div>
 
                     {/* Technologies - Enhanced Pills */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
                       {project.technologies.map((tech, techIndex) => (
                         <motion.div
                           key={techIndex}
@@ -553,12 +553,38 @@ const Projets: FC = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: techIndex * 0.05 }}
                           whileHover={{ scale: 1.1, y: -2 }}
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-600/50 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200/50 dark:border-gray-600/50 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition-all duration-300"
+                          className="flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-600/50 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200/50 dark:border-gray-600/50 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition-all duration-300"
                         >
                           <span className="text-indigo-600 dark:text-indigo-400 text-sm">{tech.icon}</span>
                           <span>{tech.name}</span>
                         </motion.div>
                       ))}
+                    </div>
+
+                    {/* Mobile Action Buttons - Always visible on mobile */}
+                    <div className="flex gap-2 md:hidden mt-2">
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                        >
+                          <FaGithub className="text-base" />
+                          <span className="font-medium text-sm">{t.projects.code}</span>
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-colors"
+                        >
+                          <FaExternalLinkAlt className="text-sm" />
+                          <span className="font-medium text-sm">{t.projects.demo}</span>
+                        </a>
+                      )}
                     </div>
                   </div>
 
