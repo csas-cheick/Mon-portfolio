@@ -11,7 +11,8 @@ import {
   FaCode,
   FaMobile,
   FaGlobe,
-  FaBrain
+  FaBrain,
+  FaHtml5
 } from "react-icons/fa";
 import { 
   SiTypescript, 
@@ -19,7 +20,9 @@ import {
   SiMysql, 
   SiWebrtc, 
   SiFlutter, 
-  SiFirebase 
+  SiFirebase, 
+  SiJavascript,
+  SiPython
 } from "react-icons/si";
 import illustrationProjects from "../assets/illustration_projects.svg";
 import { useLanguage } from "../context/LanguageContext";
@@ -264,12 +267,12 @@ const Projets: FC = () => {
         longDescription: "Nectar est une plateforme web intelligente qui transforme instantanément vos documents volumineux (PDF, Word, Images) en résumés clairs et précis. Grâce à une IA avancée, elle analyse et extrait l'essence de vos textes en s'adaptant strictement au nombre de mots que vous définissez. Fini les lectures interminables : Nectar élimine le superflu pour vous offrir une synthèse fluide, structurée et immédiatement exploitable.",
         image: "/images/screenshots/nectar.png",
         technologies: [
-          { name: "React", icon: <FaReact /> },
-          { name: "TypeScript", icon: <SiTypescript /> },
-          { name: ".NET", icon: <SiDotnet /> },
+          { name: "HTML", icon: <FaHtml5 /> },
+          { name: "JavaScript", icon: <SiJavascript /> },
+          { name: "Python", icon: <SiPython /> },
         ],
         githubUrl: "https://github.com/csas-cheick/nectar",
-        liveUrl: "https://nectar-app.onrender.com",
+        liveUrl: "https://nectar-pink.vercel.app/",
         category: "Full Stack & IA",
       },
     ];
