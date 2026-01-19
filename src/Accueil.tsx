@@ -43,7 +43,7 @@ const Accueil: FC = () => {
       <SEO />
       <div className="min-h-screen">
         {/* Section Hero */}
-        <section className="min-h-screen flex items-center justify-center py-12 px-4 relative overflow-hidden">
+        <section className="min-h-screen flex items-start justify-center pt-28 pb-12 px-4 relative overflow-hidden">
           {/* Gradient Orbs */}
           <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
@@ -55,7 +55,7 @@ const Accueil: FC = () => {
             className="container mx-auto max-w-6xl relative z-10"
           >
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Section gauche - Texte */}
+              {/* Section gauche - Texte Principal */}
               <div>
                 <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mb-6">
                   <span className="inline-block px-4 py-2 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-full text-sm font-medium">
@@ -80,11 +80,13 @@ const Accueil: FC = () => {
                 
                 <motion.div 
                   variants={itemVariants}
-                  className="text-xl md:text-2xl text-indigo-600 dark:text-indigo-400 font-semibold mb-6 h-10"
+                  className="text-xl md:text-2xl text-indigo-600 dark:text-indigo-400 font-semibold mb-8 h-10"
                 >
                   <TypeWriter words={typingWords} />
                 </motion.div>
                 
+                {/* Note: La citation a été retirée d'ici */}
+
                 <motion.p 
                   variants={itemVariants}
                   className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed"
@@ -112,24 +114,43 @@ const Accueil: FC = () => {
                 </motion.div>
               </div>
 
-              {/* Section droite - Image */}
-              <motion.div 
-                variants={itemVariants}
-                className="flex justify-center mt-3 md:mt-0"
-              >
-                <motion.div
-                  animate={{ y: [-10, 10, -10] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative"
+              {/* Section droite - CITATION & IMAGE */}
+              <div className="flex flex-col gap-6 md:gap-10 mt-6 md:mt-0">
+                
+                {/* --- CITATION DÉPLACÉE ICI (En haut à droite) --- */}
+                {/* J'ai ajouté 'md:text-right' et 'md:self-end' pour la coller à droite sur grand écran */}
+                <motion.div 
+                  variants={itemVariants}
+                  className="md:self-end md:text-right md:max-w-lg border-l-4 md:border-l-0 md:border-r-4 border-indigo-500 pl-4 md:pl-0 md:pr-4 py-1"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-3xl opacity-20 scale-110" />
-                  <img 
-                    src={illustrationHome} 
-                    alt="Illustration développeur" 
-                    className="w-full max-w-[200px] sm:max-w-[280px] md:max-w-sm h-auto relative z-10"
-                  />
+                  <p className="text-lg md:text-xl italic text-gray-700 dark:text-gray-300 font-light leading-relaxed">
+                    "Il n'y a pas de <span className="font-bold text-gray-900 dark:text-white">richesse</span> comme{' '}
+                    <span className="font-bold text-indigo-600 dark:text-indigo-400">l'intelligence</span>, 
+                    et pas de <span className="font-bold text-gray-900 dark:text-white">pauvreté</span> comme{' '}
+                    <span className="font-bold text-indigo-600 dark:text-indigo-400">l'ignorance</span>."
+                  </p>
                 </motion.div>
-              </motion.div>
+                {/* ------------------------------------------------ */}
+
+                <motion.div 
+                  variants={itemVariants}
+                  className="flex justify-center md:justify-end"
+                >
+                  <motion.div
+                    animate={{ y: [-10, 10, -10] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-3xl opacity-20 scale-110" />
+                    <img 
+                      src={illustrationHome} 
+                      alt="Illustration développeur" 
+                      className="w-full max-w-[200px] sm:max-w-[280px] md:max-w-sm h-auto relative z-10"
+                    />
+                  </motion.div>
+                </motion.div>
+              </div>
+
             </div>
           </motion.div>
           
@@ -188,7 +209,7 @@ const Accueil: FC = () => {
                 </motion.div>
               </div>
 
-              {/* Section droite - Image */}
+              {/* Section droite - Image Perso */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}

@@ -68,7 +68,7 @@ const Certifications: FC = () => {
           gradientFrom: "from-yellow-400",
           gradientTo: "to-orange-500",
           description: "This certification validates fundamental Linux skills, covering command line, file management, permissions and basic system administration.",
-          skills: ["Command Line", "File Systems", "Permissions", "User Management", "Shell Scripting"]
+          skills: ["Command Line", "File Systems", "Permissions", "User Management", "Shell Scripting", "Bash", "DNS Client Configuration", "Security", "open Source Software"]
         },
         {
           date: "April 2025",
@@ -120,7 +120,7 @@ const Certifications: FC = () => {
         gradientFrom: "from-yellow-400",
         gradientTo: "to-orange-500",
         description: "Cette certification valide les compétences fondamentales en Linux, couvrant la ligne de commande, la gestion des fichiers, les permissions et l'administration système de base.",
-        skills: ["Ligne de commande", "Systèmes de fichiers", "Permissions", "Scripts Shell"]
+        skills: ["Ligne de commande", "Systèmes de fichiers", "Permissions", "Scripts Shell", "Bash", "Gestion des utilisateurs", "Configuration client DNS", "Sécurité", "Logiciels open source"]
       },
       {
         date: "Avril 2025",
@@ -168,8 +168,8 @@ const Certifications: FC = () => {
       <SEO 
         title={language === 'fr' ? "Certifications" : "Certifications"}
         description={language === 'fr' 
-          ? "Mes certifications professionnelles - LPIC-1 Linux, Cybersécurité Cisco, Data Science et C# Microsoft."
-          : "My professional certifications - LPIC-1 Linux, Cisco Cybersecurity, Data Science and Microsoft C#."}
+          ? "Mes certifications professionnelles - LPIC- Linux Essentials, Cybersécurité Cisco, Data Science et C# Microsoft."
+          : "My professional certifications - LPIC- Linux Essentials, Cisco Cybersecurity, Data Science and Microsoft C#."}
       />
       <div className="min-h-screen transition-colors duration-300">
         {/* Section Hero */}
@@ -265,16 +265,19 @@ const Certifications: FC = () => {
                 <motion.div
                   key={index}
                   variants={cardVariants}
-                  className="group relative"
+                  className="group relative h-full"
                   onMouseEnter={() => setHoveredCard(index)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
-                  {/* Card */}
-                  <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
-                    {/* Top Gradient Bar */}
-                    <div className={`h-1.5 bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo}`} />
+                  {/* Card Structure avec h-full et flex-col */}
+                  <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col">
                     
-                    <div className="p-4 sm:p-6">
+                    {/* Top Gradient Bar */}
+                    <div className={`h-1.5 bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} flex-shrink-0`} />
+                    
+                    {/* Content Container: flex-1 permet d'occuper l'espace restant */}
+                    <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                      
                       {/* Header */}
                       <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
                         {/* Icon + Title row on mobile */}
@@ -299,7 +302,7 @@ const Certifications: FC = () => {
                           </div>
                         </div>
                         
-                        {/* Date Badge - Full width on mobile */}
+                        {/* Date Badge */}
                         <div className={`flex-shrink-0 self-start sm:self-auto px-3 py-1.5 rounded-lg bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs font-semibold flex items-center gap-1.5 w-fit`}>
                           <FaCalendarAlt className="text-xs" />
                           {cert.date}
@@ -325,12 +328,13 @@ const Certifications: FC = () => {
                         initial={false}
                         animate={{ 
                           height: hoveredCard === index ? 'auto' : 0,
-                          opacity: hoveredCard === index ? 1 : 0
+                          opacity: hoveredCard === index ? 1 : 0,
+                          marginBottom: hoveredCard === index ? 16 : 0
                         }}
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                           {cert.description}
                         </p>
                       </motion.div>
@@ -347,12 +351,12 @@ const Certifications: FC = () => {
                         ))}
                       </div>
                       
-                      {/* Verify Button */}
+                      {/* Verify Button - Avec mt-auto pour l'aligner en bas */}
                       <motion.a
                         href={cert.verificationUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs sm:text-sm font-semibold hover:shadow-lg transition-all duration-300 w-full sm:w-auto`}
+                        className={`mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} text-white text-xs sm:text-sm font-semibold hover:shadow-lg transition-all duration-300 w-full sm:w-auto`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -364,37 +368,6 @@ const Certifications: FC = () => {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
-
-            {/* Bottom Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="mt-12 text-center"
-            >
-              <div className="inline-flex flex-col sm:flex-row items-center gap-4 px-6 py-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700">
-                <div className="flex -space-x-3">
-                  {certifications.map((cert, i) => (
-                    <motion.div 
-                      key={i} 
-                      className={`w-10 h-10 rounded-full bg-gradient-to-r ${cert.gradientFrom} ${cert.gradientTo} flex items-center justify-center text-white text-sm border-2 border-white dark:border-gray-800`}
-                      whileHover={{ scale: 1.2, zIndex: 10 }}
-                    >
-                      {cert.icon}
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="text-center sm:text-left">
-                  <p className="text-sm font-semibold text-gray-800 dark:text-white">
-                    {language === 'fr' ? "Apprentissage continu" : "Continuous Learning"}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {language === 'fr' ? "Nouvelles certifications en préparation..." : "New certifications in progress..."}
-                  </p>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>
