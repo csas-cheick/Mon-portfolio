@@ -68,7 +68,7 @@ const Certifications: FC = () => {
           gradientFrom: "from-yellow-400",
           gradientTo: "to-orange-500",
           description: "This certification validates fundamental Linux skills, covering command line, file management, permissions and basic system administration.",
-          skills: ["Command Line", "File Systems", "Permissions", "Shell Scripting"]
+          skills: ["Command Line", "File Systems", "Permissions", "User Management", "Shell Scripting"]
         },
         {
           date: "April 2025",
